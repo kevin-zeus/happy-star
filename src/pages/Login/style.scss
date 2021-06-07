@@ -1,0 +1,29 @@
+.page-login {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background: url('../../assets/images/bg.svg') no-repeat;
+  background-size: 100% 100%;
+  .login-title {
+    padding-bottom: 20px;
+    text-align: center;
+    font-size: 28px;
+    font-family: cursive;
+  }
+  .login-form {
+    position: relative;
+    padding: 30px;
+    width: 400px;
+    // box-shadow: 0 0 10px 0 rgb(42, 93, 157);
+    border-radius: 6px;
+    // background: linear-gradient(rgb(75, 128, 186, 0.86), rgba(192, 207, 230, 0.8));
+  }
+  .login-form-forgot {
+    float: right;
+  }
+  .login-form-button {
+    width: 100%;
+  }
+}

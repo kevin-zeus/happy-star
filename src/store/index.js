@@ -1,0 +1,12 @@
+import { configureStore } from '@reduxjs/toolkit';
+
+import userReducer from './user';
+import globalReducer from './global';
+
+export default configureStore({
+  reducer: {
+    user: userReducer,
+    global: globalReducer,
+  },
+  devTools: process.env.NODE_ENV === 'development',
+});

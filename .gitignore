@@ -1,0 +1,18 @@
+node_modules
+dist
+
+# logs
+yarn-error.log
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# cache
+.vscode
+.idea
+.DS_Store
+.eslintcache
+.cache
+.npm

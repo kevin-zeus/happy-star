@@ -1,0 +1,27 @@
+{
+  "path": "/", // 【必须】路由地址，唯一
+  "key": "", // 【必须】唯一key值
+  "icon": "", // 图标
+  "name": "首页", // 【必须】路由名称，即导航菜单名称
+  "exact": true, // 【必须】是否严格匹配路由
+  "redirect": "", // 重定向到某个路由地址
+  "componentPath": "./src/xxx", // 【必须】页面组件路径，相对位置
+  "isMenu": true, //【必须】是否菜单项
+  "isHead": true, //【必须】 是否顶部系统栏
+  "childRoutes": [ // 子路由
+    {
+      "path": "/",
+      "key": "",
+      "icon": "",
+      "name": "首页",
+      "exact": true,
+      "redirect": "",
+      "componentPath": "./src/xxx",
+      "isMenu": false,
+      "childRoutes": [
+        // ...
+      ],
+    },
+    // ...
+  ]
+}
