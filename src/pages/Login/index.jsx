@@ -6,12 +6,9 @@ import {
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 
-import UserApi from '../../api/user';
+import userApi from '../../api/user';
 import { setUserInfo } from '../../store/user';
-import { setHeaderMenus } from '../../store/global';
 import './style.scss';
-
-const userApi = new UserApi();
 
 const LoginPage = () => {
   // router
@@ -24,26 +21,28 @@ const LoginPage = () => {
     const [, res] = await userApi.login(values);
     if (res) {
       message.success('登录成功，即将跳转...', 2);
-      const { data } = res;
-      localStorage.setItem('Authorization', data.token);
-      localStorage.setItem('userInfo', JSON.stringify(data));
-      dispatch(setUserInfo(data));
+      const { result } = res;
+      localStorage.setItem('token', result.token);
+      localStorage.setItem('refreshToken', result.refreshToken);
+      localStorage.setItem('userInfo', JSON.stringify(result));
+      dispatch(setUserInfo(result));
       setTimeout(() => {
         history.push('/');
       }, 2000);
     }
 
-    const [, ret] = await userApi.getRoutes();
-    if (ret) {
-      dispatch(setHeaderMenus(ret.data));
-    }
+    // TODO 获取导航菜单数据
+    // const [, ret] = await userApi.getRoutes();
+    // if (ret) {
+    //   dispatch(setHeaderMenus(ret.data));
+    // }
   };
 
   return (
     <div className="page-login">
       <Form onFinish={handleSubmit} className="login-form">
         <div className="login-title">欢迎登录 {globalStore.appTitle}</div>
-        <Form.Item name="username" rules={[{ required: true, message: '请输入用户名！' }]}>
+        <Form.Item name="account" rules={[{ required: true, message: '请输入用户名！' }]}>
           <Input prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="用户名" />
         </Form.Item>
         <Form.Item name="password" rules={[{ required: true, message: '请输入密码！' }]}>

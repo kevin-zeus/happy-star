@@ -1,38 +1,33 @@
 import React from 'react';
 import {
-  Layout, Dropdown, Menu, Row, Col,
+  Layout, Button, Menu, Row, Col,
 } from 'antd';
 import {
-  SmileOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined,
+  LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined,
 } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+
 import { toggleCollapsed, changeSiderMenus } from '../../store/global';
+import userApi from '../../api/user';
 
 import './style.scss';
 
-const menu = (
-  <Menu>
-    <Menu.Item key="0">
-      <SmileOutlined />
-      个人信息
-    </Menu.Item>
-    <Menu.Divider />
-    <Menu.Item key="1">
-      <Link to="/login">
-        <LogoutOutlined />
-        退出登录
-      </Link>
-    </Menu.Item>
-  </Menu>
-);
-
 const MainHeader = () => {
+  // router
+  const history = useHistory();
+  // store
   const globalStore = useSelector((state) => state.global);
   const userStore = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const changeHeaderTab = (e) => dispatch(changeSiderMenus(e.key));
+
+  const logout = () => {
+    userApi.logout();
+    localStorage.clear();
+    history.replace('/login');
+  };
 
   return (
     <Layout.Header className="main-header">
@@ -54,12 +49,11 @@ const MainHeader = () => {
         {
           userStore.info && (
             <Col>
-              <Dropdown overlay={menu} trigger={['click', 'hover']} placement="bottomCenter">
-                <div className="user-info">
-                  <span className="user-img" style={{ backgroundImage: `url(${userStore.info.avatar})` }} />
-                  <span className="user-name">{userStore.info.nickname}</span>
-                </div>
-              </Dropdown>
+              <div>
+                {/* <span className="user-img" style={{ backgroundImage: `url(${userStore.info.avatar})` }} /> */}
+                <span className="user-name">{userStore.info.platform_name}</span>
+                <Button onClick={logout} type="dashed" icon={<LogoutOutlined />}>退出</Button>
+              </div>
             </Col>
           )
         }

@@ -14,7 +14,7 @@ const BasicLayout = ({ children }) => {
 
   useEffect(() => {
     document.title = globalStore.appTitle;
-    if (!localStorage.getItem('Authorization')) {
+    if (!localStorage.getItem('token')) {
       history.replace('/login');
     }
   }, []);

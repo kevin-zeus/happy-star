@@ -18,21 +18,19 @@ module.exports = {
               {
                 path: '/goods/category',
                 name: '分类管理',
-                componentPath: '@pages/goods/Category',
                 isMenu: true,
+                exact: true,
                 icon: '',
               },
               {
                 path: '/goods/list',
                 name: '商品列表',
-                componentPath: '@pages/goods/List',
                 isMenu: true,
                 icon: '',
               },
               {
                 path: '/goods/interest',
                 name: '返利规则',
-                componentPath: '@pages/goods/Interest',
                 isMenu: true,
                 icon: '',
               },

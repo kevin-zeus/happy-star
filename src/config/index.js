@@ -1,5 +1,5 @@
-import * as devConfig from './config.dev';
-import * as prodConfig from './config.prod';
+import devConfig from './config.dev';
+import prodConfig from './config.prod';
 
 // 测试环境
 const isDev = true;

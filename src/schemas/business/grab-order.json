@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "user_task_id": {
+      "title": "任务ID",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+        "allowClear": true
+      },
+      "type": "string"
+    },
+    "active": {
+      "title": "状态",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "enum": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "props": {
+        "allowClear": true,
+        "placeholder": "全部"
+      },
+      "enumNames": [
+        "待支付",
+        "待审核",
+        "进行中",
+        "审核失败",
+        "抢单成功",
+        "抢单失败"
+      ],
+      "type": "number",
+      "widget": "select"
+    }
+  },
+  "displayType": "row",
+  "showDescIcon": true
+}

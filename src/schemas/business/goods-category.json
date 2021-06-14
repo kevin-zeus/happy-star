@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "product_category_name": {
+      "title": "商品分类名称",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+        "allowClear": true
+      },
+      "type": "string"
+    },
+    "active": {
+      "title": "状态",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "enum": [
+        1,
+        2
+      ],
+      "props": {
+        "allowClear": true,
+        "placeholder": "全部"
+      },
+      "enumNames": [
+        "正常",
+        "禁用"
+      ],
+      "type": "number",
+      "widget": "select"
+    },
+    "sort": {
+      "title": "排序序号",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "type": "number"
+    }
+  },
+  "displayType": "row",
+  "showDescIcon": true
+}

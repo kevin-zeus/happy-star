@@ -25,9 +25,20 @@ const config = [
             component: lazy(() => import('../pages/Welcome')),
           },
           {
-            path: '/default-admin',
-            name: '默认模板',
-            component: lazy(() => import('../pages/DefaultAdmin')),
+            path: '/business',
+            name: '业务管理',
+            childRoutes: [
+              {
+                path: '/business/goods-category',
+                name: '商品分类',
+                component: lazy(() => import('../pages/Business/GoodsCategory')),
+              },
+              {
+                path: '/business/grab-order',
+                name: '抢单任务',
+                component: lazy(() => import('../pages/Business/GrabOrder')),
+              },
+            ],
           },
           {
             path: '/exception',

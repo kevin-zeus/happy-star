@@ -1,16 +1,18 @@
 import BaseApi from './base';
 
 class UserApi extends BaseApi {
-  login({ username, password }) {
-    return this.request.post('/login', {
-      username,
+  login({ account, password }) {
+    return this.post('/platform/v1/login', {
+      account,
       password,
     });
   }
 
-  getRoutes() {
-    return this.request.post('/routes');
+  logout() {
+    return this.post('/platform/v1/login/logout', {
+      token: localStorage.getItem('token'),
+    });
   }
 }
 
-export default UserApi;
+export default new UserApi();

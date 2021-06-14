@@ -6,7 +6,7 @@ const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 const commonConfig = require('./webpack.common.js');
 
-module.exports = merge(commonConfig, {
+const config = merge(commonConfig, {
   target: 'web',
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
@@ -17,7 +17,7 @@ module.exports = merge(commonConfig, {
       clearConsole: true,
     })
   ],
-  devtool: 'cheap-source-map',
+  devtool: 'source-map',
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     port: 9001,
@@ -33,3 +33,11 @@ module.exports = merge(commonConfig, {
     },
   }
 });
+
+if (process.env.npm_lifecycle_event === 'start') {
+  config.devServer.proxy = {
+    '/platform': 'http://159.75.145.86:8201',
+  }
+}
+
+module.exports = config;
