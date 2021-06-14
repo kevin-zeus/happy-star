@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "properties": {
+    "user_task_id": {
+      "title": "任务ID",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+        "allowClear": true
+      },
+      "type": "string"
+    },
+    "delivery_status": {
+      "title": "发货状态",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "enum": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "props": {
+        "allowClear": true,
+        "placeholder": "全部"
+      },
+      "enumNames": [
+        "待发货",
+        "无需发货",
+        "已发货",
+        "已退货"
+      ],
+      "type": "number",
+      "widget": "select"
+    }
+  },
+  "displayType": "row",
+  "showDescIcon": true
+}

@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "properties": {
+    "number": {
+      "title": "抢单人数",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+        "allowClear": true
+      },
+      "type": "string"
+    },
+    "day": {
+      "title": "抢单天数",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+        "allowClear": true
+      },
+      "type": "string"
+    },
+    "price": {
+      "title": "优惠价计算规则（原价为X，抢单人数为Y）",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+        "allowClear": true
+      },
+      "type": "string"
+    },
+    "rebate": {
+      "title": "返利金额计算规则（原价为X，抢单人数为Y）",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+        "allowClear": true
+      },
+      "type": "string"
+    }
+  },
+  "showDescIcon": true
+}

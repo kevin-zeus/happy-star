@@ -6,6 +6,11 @@ class ConfigApi extends BaseApi {
   menu() {
     return this.post('/platform/v1/system/config/menu');
   }
+
+  // 获取上传授权
+  upload() {
+    return this.post('/platform/v1/system/config/upload');
+  }
 }
 
 export default new ConfigApi();

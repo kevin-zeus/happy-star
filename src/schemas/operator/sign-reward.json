@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "title": "签到人",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+        "allowClear": true
+      },
+      "type": "string"
+    }
+  },
+  "displayType": "row",
+  "showDescIcon": true
+}

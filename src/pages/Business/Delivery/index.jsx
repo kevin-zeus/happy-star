@@ -1,16 +1,18 @@
 import React, {
   useState, useCallback, useImperativeHandle, forwardRef, useRef,
+  useEffect,
 } from 'react';
-import { Button, Drawer, message } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import {
+  Button, Drawer, message,
+} from 'antd';
 import {
   Table, Search, TableProvider, useTable,
 } from 'table-render';
 import FormRender, { useForm } from 'form-render';
 
 import filterSearchForm from '@/utils/filterSearchForm';
-import schema from '@/schemas/business/grab-order.json';
-import grabOrderApi from '../../../api/business/grab-order';
+import schema from '../../../schemas/business/delivery.json';
+import deliveryApi from '../../../api/business/delivery';
 
 const TableBody = forwardRef((props, ref) => {
   // tableState
@@ -22,8 +24,8 @@ const TableBody = forwardRef((props, ref) => {
     },
   }));
 
-  const searchApi = async (params) => {
-    const [, res] = await grabOrderApi.getList(params);
+  const searchApi = async (params = {}) => {
+    const [, res] = await deliveryApi.getList(params);
     if (res && res.result) {
       return {
         rows: res.result.list,
@@ -36,48 +38,45 @@ const TableBody = forwardRef((props, ref) => {
   const columns = [
     {
       title: '任务ID',
-      dataIndex: 'product_category_id',
+      dataIndex: 'partner_id',
     },
     {
       title: '商品ID',
-      dataIndex: 'product_id',
+      dataIndex: 'partner_name',
     },
     {
       title: '商品名称',
-      dataIndex: 'active',
-      render: (record) => (record === 1 ? <span style={{ color: 'green' }}>正常</span> : <span style={{ color: 'red' }}>禁用</span>),
+      dataIndex: 'partner_address',
     },
     {
-      title: '原价',
-      dataIndex: 'sort',
+      title: '收货人姓名',
+      dataIndex: 'partner_contact_name',
     },
     {
-      title: '优惠价',
-      dataIndex: 'update_at',
+      title: '手机号',
+      dataIndex: 'partner_contact',
     },
     {
-      title: '抢单人数',
-      dataIndex: 'update_at',
+      title: '收货地址',
+      dataIndex: 'create_at',
     },
     {
-      title: '返利金额',
-      dataIndex: 'update_at',
+      title: '任务完成时间',
+      dataIndex: 'create_at',
     },
     {
-      title: '剩余时间',
-      dataIndex: 'update_at',
+      title: '备注',
+      dataIndex: 'create_at',
     },
     {
-      title: '发布人',
-      dataIndex: 'update_at',
-    },
-    {
-      title: '发布时间',
-      dataIndex: 'update_at',
-    },
-    {
-      title: '任务状态',
-      dataIndex: 'update_at',
+      title: '发货状态',
+      dataIndex: 'delivery_status',
+      render: (record) => ({
+        1: <span>待发货</span>,
+        2: <span style={{ color: 'grey' }}>无需发货</span>,
+        3: <span style={{ color: 'green' }}>已发货</span>,
+        4: <span style={{ color: 'red' }}>已退货</span>,
+      }[record]),
     },
     {
       title: '操作',
@@ -87,37 +86,34 @@ const TableBody = forwardRef((props, ref) => {
       render: (row) => (
         <div>
           <Button type="link" onClick={() => props.editCurrentData(row)}>编辑</Button>
-          {/* <Button type="text" onClick={deleteCurrentData(row)}>删除</Button> */}
         </div>
       ),
     },
   ];
 
-  const toolbarRender = () => [
-    <Button type="primary" icon={<PlusOutlined />} onClick={props.createItem}>添加</Button>,
-  ];
+  const toolbarRender = () => [];
 
   return (
     <div>
       <Search
         schema={{
-          ...filterSearchForm(schema),
+          ...filterSearchForm(props.schema, 'user_task_id', 'delivery_status'),
           column: 4,
         }}
         api={searchApi}
         displayType="row"
       />
       <Table
-        headerTitle="抢单任务"
+        headerTitle="发货管理"
         columns={columns}
-        rowKey="product_category_id"
+        rowKey="partner_id"
         toolbarRender={toolbarRender}
       />
     </div>
   );
 });
 
-const GrabOrder = () => {
+const Partner = () => {
   const tableRef = useRef();
   // state
   const [showDrawer, setShowDrawer] = useState(false);
@@ -132,7 +128,7 @@ const GrabOrder = () => {
   }, [setCurrentData]);
 
   const createRequest = async (values) => {
-    const [, res] = await grabOrderApi.create(values);
+    const [, res] = await deliveryApi.create(values);
     if (res) {
       message.success('添加成功');
       setShowDrawer(false);
@@ -147,7 +143,7 @@ const GrabOrder = () => {
   };
 
   const updateRequest = async (values) => {
-    const [, res] = await grabOrderApi.update({
+    const [, res] = await deliveryApi.update({
       ...currentData,
       ...values,
     });
@@ -168,6 +164,10 @@ const GrabOrder = () => {
     }
   };
 
+  useEffect(() => {
+
+  }, []);
+
   return (
     <div>
       <TableProvider>
@@ -175,6 +175,7 @@ const GrabOrder = () => {
           ref={tableRef}
           createItem={createItem}
           editCurrentData={editCurrentData}
+          schema={schema}
         />
       </TableProvider>
       <Drawer
@@ -200,4 +201,4 @@ const GrabOrder = () => {
   );
 };
 
-export default GrabOrder;
+export default Partner;

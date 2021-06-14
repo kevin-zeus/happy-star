@@ -1,7 +1,10 @@
 import React, {
   useState, useCallback, useImperativeHandle, forwardRef, useRef,
+  useEffect,
 } from 'react';
-import { Button, Drawer, message } from 'antd';
+import {
+  Button, Drawer, message,
+} from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import {
   Table, Search, TableProvider, useTable,
@@ -9,8 +12,8 @@ import {
 import FormRender, { useForm } from 'form-render';
 
 import filterSearchForm from '@/utils/filterSearchForm';
-import schema from '@/schemas/business/grab-order.json';
-import grabOrderApi from '../../../api/business/grab-order';
+import schema from '@/schemas/business/rule-config.json';
+import ruleConfigApi from '../../../api/business/rule-config';
 
 const TableBody = forwardRef((props, ref) => {
   // tableState
@@ -22,12 +25,12 @@ const TableBody = forwardRef((props, ref) => {
     },
   }));
 
-  const searchApi = async (params) => {
-    const [, res] = await grabOrderApi.getList(params);
+  const searchApi = async (params = {}) => {
+    const [, res] = await ruleConfigApi.getList(params);
     if (res && res.result) {
       return {
-        rows: res.result.list,
-        total: res.result.total,
+        rows: res.result,
+        total: res.result.length,
       };
     }
     return null;
@@ -35,61 +38,24 @@ const TableBody = forwardRef((props, ref) => {
 
   const columns = [
     {
-      title: '任务ID',
-      dataIndex: 'product_category_id',
-    },
-    {
-      title: '商品ID',
-      dataIndex: 'product_id',
-    },
-    {
-      title: '商品名称',
-      dataIndex: 'active',
-      render: (record) => (record === 1 ? <span style={{ color: 'green' }}>正常</span> : <span style={{ color: 'red' }}>禁用</span>),
-    },
-    {
-      title: '原价',
-      dataIndex: 'sort',
-    },
-    {
-      title: '优惠价',
-      dataIndex: 'update_at',
+      title: '返利规则ID',
+      dataIndex: 'product_rule_config_id',
     },
     {
       title: '抢单人数',
-      dataIndex: 'update_at',
+      dataIndex: 'number',
     },
     {
-      title: '返利金额',
-      dataIndex: 'update_at',
+      title: '抢单天数',
+      dataIndex: 'day',
     },
     {
-      title: '剩余时间',
-      dataIndex: 'update_at',
+      title: '优惠价计算规则',
+      dataIndex: 'price',
     },
     {
-      title: '发布人',
-      dataIndex: 'update_at',
-    },
-    {
-      title: '发布时间',
-      dataIndex: 'update_at',
-    },
-    {
-      title: '任务状态',
-      dataIndex: 'update_at',
-    },
-    {
-      title: '操作',
-      dataIndex: '',
-      align: 'center',
-      width: '300',
-      render: (row) => (
-        <div>
-          <Button type="link" onClick={() => props.editCurrentData(row)}>编辑</Button>
-          {/* <Button type="text" onClick={deleteCurrentData(row)}>删除</Button> */}
-        </div>
-      ),
+      title: '返利金额计算规则',
+      dataIndex: 'rebate',
     },
   ];
 
@@ -99,16 +65,9 @@ const TableBody = forwardRef((props, ref) => {
 
   return (
     <div>
-      <Search
-        schema={{
-          ...filterSearchForm(schema),
-          column: 4,
-        }}
-        api={searchApi}
-        displayType="row"
-      />
+      <Search className="hide" schema={{ ...filterSearchForm(props.schema), column: 4 }} api={searchApi} displayType="row" />
       <Table
-        headerTitle="抢单任务"
+        headerTitle="返利规则"
         columns={columns}
         rowKey="product_category_id"
         toolbarRender={toolbarRender}
@@ -117,7 +76,7 @@ const TableBody = forwardRef((props, ref) => {
   );
 });
 
-const GrabOrder = () => {
+const Product = () => {
   const tableRef = useRef();
   // state
   const [showDrawer, setShowDrawer] = useState(false);
@@ -132,7 +91,7 @@ const GrabOrder = () => {
   }, [setCurrentData]);
 
   const createRequest = async (values) => {
-    const [, res] = await grabOrderApi.create(values);
+    const [, res] = await ruleConfigApi.create(values);
     if (res) {
       message.success('添加成功');
       setShowDrawer(false);
@@ -147,7 +106,7 @@ const GrabOrder = () => {
   };
 
   const updateRequest = async (values) => {
-    const [, res] = await grabOrderApi.update({
+    const [, res] = await ruleConfigApi.update({
       ...currentData,
       ...values,
     });
@@ -168,6 +127,10 @@ const GrabOrder = () => {
     }
   };
 
+  useEffect(() => {
+
+  }, []);
+
   return (
     <div>
       <TableProvider>
@@ -175,6 +138,7 @@ const GrabOrder = () => {
           ref={tableRef}
           createItem={createItem}
           editCurrentData={editCurrentData}
+          schema={schema}
         />
       </TableProvider>
       <Drawer
@@ -189,6 +153,7 @@ const GrabOrder = () => {
           </Button>
         )}
       >
+        {/* TODO:修改商品与查看 */}
         <FormRender
           form={form}
           schema={schema}
@@ -200,4 +165,4 @@ const GrabOrder = () => {
   );
 };
 
-export default GrabOrder;
+export default Product;

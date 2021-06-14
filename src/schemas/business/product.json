@@ -1,0 +1,67 @@
+{
+  "type": "object",
+  "properties": {
+    "product_id": {
+      "title": "商品ID",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+        "allowClear": true
+      },
+      "type": "string"
+    },
+    "product_name": {
+      "title": "商品名称",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+        "allowClear": true
+      },
+      "type": "string"
+    },
+    "status": {
+      "title": "状态",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "enum": [
+        1,
+        2,
+        3
+      ],
+      "props": {
+        "allowClear": true,
+        "placeholder": "全部"
+      },
+      "enumNames": [
+        "正常",
+        "维护中",
+        "下架"
+      ],
+      "type": "number",
+      "widget": "select"
+    },
+    "product_category_id": {
+      "title": "商品分类",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "enum": [],
+      "props": {
+        "allowClear": true,
+        "placeholder": "全部"
+      },
+      "enumNames": [],
+      "type": "string",
+      "widget": "select"
+    }
+  },
+  "displayType": "row",
+  "showDescIcon": true
+}

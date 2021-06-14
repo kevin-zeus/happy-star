@@ -34,9 +34,51 @@ const config = [
                 component: lazy(() => import('../pages/Business/GoodsCategory')),
               },
               {
+                path: '/business/product',
+                name: '商品管理',
+                component: lazy(() => import('../pages/Business/Product')),
+              },
+              {
                 path: '/business/grab-order',
                 name: '抢单任务',
+                exact: true,
                 component: lazy(() => import('../pages/Business/GrabOrder')),
+              },
+              {
+                path: '/business/rule-config',
+                name: '返利规则',
+                component: lazy(() => import('../pages/Business/RuleConfig')),
+              },
+              {
+                path: '/business/partner',
+                name: '合作商家',
+                component: lazy(() => import('../pages/Business/Partner')),
+              },
+              {
+                path: '/business/delivery',
+                name: '发货管理',
+                component: lazy(() => import('../pages/Business/Delivery')),
+              },
+            ],
+          },
+          {
+            path: '/operator',
+            name: '运营管理',
+            childRoutes: [
+              {
+                path: '/operator/user-sign',
+                name: '用户签到列表',
+                component: lazy(() => import('../pages/Operator/UserSign')),
+              },
+              {
+                path: '/operator/sign-reward',
+                name: '签到奖励记录',
+                component: lazy(() => import('../pages/Operator/SignReward')),
+              },
+              {
+                path: '/operator/user-manager',
+                name: '用户管理',
+                component: lazy(() => import('../pages/Operator/UserManager')),
               },
             ],
           },

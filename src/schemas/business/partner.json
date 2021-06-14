@@ -1,0 +1,83 @@
+{
+  "type": "object",
+  "properties": {
+    "partner_name": {
+      "title": "商家名称",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+        "allowClear": true
+      },
+      "type": "string"
+    },
+    "partner_image": {
+      "title": "商家图片",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+        "allowClear": true
+      },
+      "type": "string"
+    },
+    "partner_address": {
+      "title": "商家地址",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+        "allowClear": true
+      },
+      "type": "string"
+    },
+    "partner_contact_name": {
+      "title": "联系人",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+        "allowClear": true
+      },
+      "type": "string"
+    },
+    "partner_contact": {
+      "title": "联系方式",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+        "allowClear": true
+      },
+      "type": "string"
+    },
+    "status": {
+      "title": "合作状态",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "enum": [
+        1,
+        2
+      ],
+      "props": {
+        "allowClear": true,
+        "placeholder": "全部"
+      },
+      "enumNames": [
+        "合作中",
+        "终止合作"
+      ],
+      "type": "number",
+      "widget": "select"
+    }
+  },
+  "displayType": "row",
+  "showDescIcon": true
+}

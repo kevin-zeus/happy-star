@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "title": "UID",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+        "allowClear": true
+      },
+      "type": "string"
+    },
+    "mobile": {
+      "title": "手机号",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+        "allowClear": true
+      },
+      "type": "string"
+    },
+    "invite_code": {
+      "title": "邀请码",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+        "allowClear": true
+      },
+      "type": "string"
+    }
+  },
+  "displayType": "row",
+  "showDescIcon": true
+}

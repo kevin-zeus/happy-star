@@ -1,16 +1,20 @@
 import React, {
   useState, useCallback, useImperativeHandle, forwardRef, useRef,
+  useEffect,
 } from 'react';
-import { Button, Drawer, message } from 'antd';
+import {
+  Button, Drawer, message,
+} from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import {
   Table, Search, TableProvider, useTable,
 } from 'table-render';
 import FormRender, { useForm } from 'form-render';
 
+import productApi from '@/api/business/product';
 import filterSearchForm from '@/utils/filterSearchForm';
-import schema from '@/schemas/business/grab-order.json';
-import grabOrderApi from '../../../api/business/grab-order';
+import schemaConfig from '@/schemas/business/product.json';
+import goodsCategoryApi from '../../../api/business/goods-category';
 
 const TableBody = forwardRef((props, ref) => {
   // tableState
@@ -23,7 +27,7 @@ const TableBody = forwardRef((props, ref) => {
   }));
 
   const searchApi = async (params) => {
-    const [, res] = await grabOrderApi.getList(params);
+    const [, res] = await productApi.getList(params);
     if (res && res.result) {
       return {
         rows: res.result.list,
@@ -35,49 +39,45 @@ const TableBody = forwardRef((props, ref) => {
 
   const columns = [
     {
-      title: '任务ID',
-      dataIndex: 'product_category_id',
-    },
-    {
       title: '商品ID',
       dataIndex: 'product_id',
     },
     {
       title: '商品名称',
-      dataIndex: 'active',
-      render: (record) => (record === 1 ? <span style={{ color: 'green' }}>正常</span> : <span style={{ color: 'red' }}>禁用</span>),
+      dataIndex: 'product_name',
+    },
+    {
+      title: '商品分类',
+      dataIndex: ['category', 'product_category_name'],
     },
     {
       title: '原价',
-      dataIndex: 'sort',
+      dataIndex: 'price',
     },
     {
-      title: '优惠价',
-      dataIndex: 'update_at',
+      title: '抢单规则',
+      dataIndex: 'rule',
+      render: (record) => (record.length > 0 ? record.map((rule, i) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <div key={i}>{rule.number}人抢单-优惠价￥{rule.price}-返利￥{rule.rebate}</div>
+      )) : null),
     },
     {
-      title: '抢单人数',
-      dataIndex: 'update_at',
+      title: '任务数',
+      dataIndex: 'total_task',
     },
     {
-      title: '返利金额',
-      dataIndex: 'update_at',
+      title: '已完成任务数',
+      dataIndex: 'complete_task',
     },
     {
-      title: '剩余时间',
-      dataIndex: 'update_at',
-    },
-    {
-      title: '发布人',
-      dataIndex: 'update_at',
-    },
-    {
-      title: '发布时间',
-      dataIndex: 'update_at',
-    },
-    {
-      title: '任务状态',
-      dataIndex: 'update_at',
+      title: '商品状态',
+      dataIndex: 'status',
+      render: (record) => ({
+        1: <span style={{ color: 'green' }}>正常</span>,
+        2: <span style={{ color: 'orange' }}>维护中</span>,
+        3: <span style={{ color: 'red' }}>下架</span>,
+      }[record]),
     },
     {
       title: '操作',
@@ -87,7 +87,7 @@ const TableBody = forwardRef((props, ref) => {
       render: (row) => (
         <div>
           <Button type="link" onClick={() => props.editCurrentData(row)}>编辑</Button>
-          {/* <Button type="text" onClick={deleteCurrentData(row)}>删除</Button> */}
+          <Button type="link">查看</Button>
         </div>
       ),
     },
@@ -99,16 +99,9 @@ const TableBody = forwardRef((props, ref) => {
 
   return (
     <div>
-      <Search
-        schema={{
-          ...filterSearchForm(schema),
-          column: 4,
-        }}
-        api={searchApi}
-        displayType="row"
-      />
+      <Search schema={{ ...filterSearchForm(props.schema), column: 4 }} api={searchApi} displayType="row" />
       <Table
-        headerTitle="抢单任务"
+        headerTitle="商品管理"
         columns={columns}
         rowKey="product_category_id"
         toolbarRender={toolbarRender}
@@ -117,11 +110,12 @@ const TableBody = forwardRef((props, ref) => {
   );
 });
 
-const GrabOrder = () => {
+const Product = () => {
   const tableRef = useRef();
   // state
   const [showDrawer, setShowDrawer] = useState(false);
   const [currentData, setCurrentData] = useState(null);
+  const [schema, setSchema] = useState(schemaConfig);
 
   const form = useForm();
 
@@ -132,7 +126,7 @@ const GrabOrder = () => {
   }, [setCurrentData]);
 
   const createRequest = async (values) => {
-    const [, res] = await grabOrderApi.create(values);
+    const [, res] = await productApi.create(values);
     if (res) {
       message.success('添加成功');
       setShowDrawer(false);
@@ -147,7 +141,7 @@ const GrabOrder = () => {
   };
 
   const updateRequest = async (values) => {
-    const [, res] = await grabOrderApi.update({
+    const [, res] = await productApi.update({
       ...currentData,
       ...values,
     });
@@ -168,6 +162,24 @@ const GrabOrder = () => {
     }
   };
 
+  useEffect(() => {
+    (async function () {
+      const [, res] = await goodsCategoryApi.getAll();
+      const newSchema = JSON.parse(JSON.stringify(schemaConfig));
+      if (res) {
+        if (newSchema.properties.product_category_id) {
+          newSchema.properties.product_category_id.enum = res.result.map((category) => category.product_category_id);
+          newSchema.properties.product_category_id.enumNames = res.result.map((category) => category.product_category_name);
+        }
+      } else {
+        delete newSchema.properties.product_category_id;
+      }
+      setSchema(newSchema);
+    }());
+  }, []);
+
+  console.log(schema);
+
   return (
     <div>
       <TableProvider>
@@ -175,6 +187,7 @@ const GrabOrder = () => {
           ref={tableRef}
           createItem={createItem}
           editCurrentData={editCurrentData}
+          schema={schema}
         />
       </TableProvider>
       <Drawer
@@ -189,6 +202,7 @@ const GrabOrder = () => {
           </Button>
         )}
       >
+        {/* TODO:修改商品与查看 */}
         <FormRender
           form={form}
           schema={schema}
@@ -200,4 +214,4 @@ const GrabOrder = () => {
   );
 };
 
-export default GrabOrder;
+export default Product;
