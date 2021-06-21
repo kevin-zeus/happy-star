@@ -12,7 +12,7 @@ import {
 import FormRender, { useForm } from 'form-render';
 
 import filterSearchForm from '@/utils/filterSearchForm';
-import schema from '@/schemas/business/rule-config.json';
+import schema from './schema.json';
 import ruleConfigApi from '../../../api/business/rule-config';
 
 const TableBody = forwardRef((props, ref) => {
@@ -57,6 +57,17 @@ const TableBody = forwardRef((props, ref) => {
       title: '返利金额计算规则',
       dataIndex: 'rebate',
     },
+    {
+      title: '操作',
+      dataIndex: '',
+      align: 'center',
+      width: '300',
+      render: (row) => (
+        <div>
+          <Button type="link" onClick={() => props.editCurrentData(row)}>编辑</Button>
+        </div>
+      ),
+    },
   ];
 
   const toolbarRender = () => [
@@ -69,7 +80,7 @@ const TableBody = forwardRef((props, ref) => {
       <Table
         headerTitle="返利规则"
         columns={columns}
-        rowKey="product_category_id"
+        rowKey="product_rule_config_id"
         toolbarRender={toolbarRender}
       />
     </div>

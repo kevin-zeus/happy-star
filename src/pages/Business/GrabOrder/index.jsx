@@ -1,15 +1,14 @@
 import React, {
   useState, useCallback, useImperativeHandle, forwardRef, useRef,
 } from 'react';
-import { Button, Drawer, message } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { Button, Modal, message } from 'antd';
 import {
   Table, Search, TableProvider, useTable,
 } from 'table-render';
 import FormRender, { useForm } from 'form-render';
 
 import filterSearchForm from '@/utils/filterSearchForm';
-import schema from '@/schemas/business/grab-order.json';
+import schema from './schema.json';
 import grabOrderApi from '../../../api/business/grab-order';
 
 const TableBody = forwardRef((props, ref) => {
@@ -36,7 +35,7 @@ const TableBody = forwardRef((props, ref) => {
   const columns = [
     {
       title: '任务ID',
-      dataIndex: 'product_category_id',
+      dataIndex: 'user_task_id',
     },
     {
       title: '商品ID',
@@ -44,40 +43,51 @@ const TableBody = forwardRef((props, ref) => {
     },
     {
       title: '商品名称',
-      dataIndex: 'active',
-      render: (record) => (record === 1 ? <span style={{ color: 'green' }}>正常</span> : <span style={{ color: 'red' }}>禁用</span>),
+      dataIndex: 'product',
     },
     {
-      title: '原价',
+      title: '商品分类',
       dataIndex: 'sort',
     },
     {
+      title: '原价',
+      dataIndex: 'original_price',
+    },
+    {
       title: '优惠价',
-      dataIndex: 'update_at',
+      dataIndex: 'price',
     },
     {
       title: '抢单人数',
-      dataIndex: 'update_at',
+      dataIndex: 'number',
     },
     {
       title: '返利金额',
-      dataIndex: 'update_at',
+      dataIndex: 'rebate',
     },
     {
       title: '剩余时间',
-      dataIndex: 'update_at',
+      dataIndex: 'end_date',
     },
     {
       title: '发布人',
-      dataIndex: 'update_at',
+      dataIndex: ['user', 'nickname'],
     },
     {
       title: '发布时间',
-      dataIndex: 'update_at',
+      dataIndex: 'create_at',
     },
     {
       title: '任务状态',
-      dataIndex: 'update_at',
+      dataIndex: 'status',
+      render: (record) => ({
+        1: '待支付',
+        2: '待审核',
+        3: '进行中',
+        4: '审核失败',
+        5: '抢单成功',
+        6: '抢单失败',
+      }[record]),
     },
     {
       title: '操作',
@@ -86,22 +96,34 @@ const TableBody = forwardRef((props, ref) => {
       width: '300',
       render: (row) => (
         <div>
-          <Button type="link" onClick={() => props.editCurrentData(row)}>编辑</Button>
-          {/* <Button type="text" onClick={deleteCurrentData(row)}>删除</Button> */}
+          {
+            row.status === 2 && (
+              <Button type="link" onClick={() => props.audit(row)}>审核</Button>
+            )
+          }
+          {
+            ![1, 2, 4].includes(row.status) && (
+              <Button type="link">查看</Button>
+            )
+          }
+          {
+            row.status === 3 && (
+              <Button type="link" onClick={() => props.addLog(row)}>添加抢单记录</Button>
+            )
+          }
         </div>
       ),
     },
   ];
 
   const toolbarRender = () => [
-    <Button type="primary" icon={<PlusOutlined />} onClick={props.createItem}>添加</Button>,
   ];
 
   return (
     <div>
       <Search
         schema={{
-          ...filterSearchForm(schema),
+          ...filterSearchForm(schema, 'user_task_id', 'status'),
           column: 4,
         }}
         api={searchApi}
@@ -110,7 +132,7 @@ const TableBody = forwardRef((props, ref) => {
       <Table
         headerTitle="抢单任务"
         columns={columns}
-        rowKey="product_category_id"
+        rowKey="user_task_id"
         toolbarRender={toolbarRender}
       />
     </div>
@@ -120,51 +142,42 @@ const TableBody = forwardRef((props, ref) => {
 const GrabOrder = () => {
   const tableRef = useRef();
   // state
-  const [showDrawer, setShowDrawer] = useState(false);
+  const [showAudit, setShowAudit] = useState(false);
+  const [showLogs, setShowLogs] = useState(false);
   const [currentData, setCurrentData] = useState(null);
 
-  const form = useForm();
+  const formAudit = useForm();
+  const formLogs = useForm();
 
-  const editCurrentData = useCallback((data) => {
+  const handleAudit = useCallback((data) => {
     setCurrentData(data);
-    setShowDrawer(true);
-    form?.setValues(data);
+    setShowAudit(true);
   }, [setCurrentData]);
 
-  const createRequest = async (values) => {
-    const [, res] = await grabOrderApi.create(values);
-    if (res) {
-      message.success('添加成功');
-      setShowDrawer(false);
-      tableRef.current?.refresh();
-    }
-  };
+  const handleAddLog = useCallback((data) => {
+    setCurrentData(data);
+    setShowLogs(true);
+  }, [setCurrentData]);
 
-  const createItem = () => {
-    setCurrentData(null);
-    setShowDrawer(true);
-    form?.setValues({});
-  };
-
-  const updateRequest = async (values) => {
-    const [, res] = await grabOrderApi.update({
-      ...currentData,
+  const handleAuditSubmit = async (values) => {
+    const [, res] = await grabOrderApi.audit({
       ...values,
+      user_task_id: currentData.user_task_id,
     });
     if (res) {
-      message.success('修改成功');
-      setShowDrawer(false);
+      message.success('审核成功');
       tableRef.current?.refresh();
     }
   };
 
-  const handleSubmit = (values) => {
-    if (currentData) {
-      // 更新数据
-      updateRequest(values);
-    } else {
-      // 新增数据
-      createRequest(values);
+  const handleLogsSubmit = async (values) => {
+    const [, res] = await grabOrderApi.batch({
+      ...values,
+      user_task_id: currentData.user_task_id,
+    });
+    if (res) {
+      message.success('添加记录成功');
+      tableRef.current?.refresh();
     }
   };
 
@@ -173,29 +186,88 @@ const GrabOrder = () => {
       <TableProvider>
         <TableBody
           ref={tableRef}
-          createItem={createItem}
-          editCurrentData={editCurrentData}
+          audit={handleAudit}
+          addLog={handleAddLog}
         />
       </TableProvider>
-      <Drawer
-        visible={showDrawer}
-        placement="right"
-        onClose={() => setShowDrawer(false)}
-        title="编辑信息"
-        width="750px"
-        footer={(
-          <Button type="primary" onClick={form.submit}>
-            提交
-          </Button>
-        )}
+      <Modal
+        title="审核抢单任务"
+        visible={showAudit}
+        onOk={() => formAudit.submit()}
+        onCancel={() => setShowAudit(false)}
       >
         <FormRender
-          form={form}
-          schema={schema}
-          data={currentData}
-          onFinish={handleSubmit}
+          form={formAudit}
+          schema={{
+            type: 'object',
+            properties: {
+              comment: {
+                title: '备注',
+                required: true,
+                disabled: false,
+                readOnly: false,
+                hidden: false,
+                props: {
+                  allowClear: true,
+                },
+                type: 'string',
+              },
+              status: {
+                title: '状态',
+                required: true,
+                disabled: false,
+                readOnly: false,
+                hidden: false,
+                enum: [
+                  3,
+                  4,
+                ],
+                props: {
+                  allowClear: true,
+                },
+                enumNames: [
+                  '通过',
+                  '不通过',
+                ],
+                type: 'number',
+                widget: 'radio',
+              },
+            },
+            displayType: 'row',
+            showDescIcon: true,
+          }}
+          onFinish={handleAuditSubmit}
         />
-      </Drawer>
+      </Modal>
+      <Modal
+        title="审核抢单任务"
+        visible={showLogs}
+        onOk={() => formLogs.submit()}
+        onCancel={() => setShowLogs(false)}
+      >
+        <FormRender
+          form={formLogs}
+          schema={{
+            type: 'object',
+            properties: {
+              number: {
+                title: '抢单记录条数',
+                required: true,
+                disabled: false,
+                readOnly: false,
+                hidden: false,
+                props: {
+                  allowClear: true,
+                },
+                type: 'string',
+              },
+            },
+            displayType: 'row',
+            showDescIcon: true,
+          }}
+          onFinish={handleLogsSubmit}
+        />
+      </Modal>
     </div>
   );
 };

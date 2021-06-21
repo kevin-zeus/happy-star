@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import './style.scss';
 
 const renderMenuItem = (target) => target
-  .filter((item) => item.path && item.name && item.isMenu)
+  .filter((item) => item.path && item.name)
   .map((subMenu) => {
     if (subMenu.childRoutes && !!subMenu.childRoutes.find((child) => child.path && child.name)) {
       return (

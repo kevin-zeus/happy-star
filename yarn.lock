@@ -959,6 +959,14 @@
     core-js-pure "^3.0.0"
     regenerator-runtime "^0.13.4"
 
+"@babel/runtime-corejs3@^7.11.2":
+  version "7.14.6"
+  resolved "https://registry.nlark.com/@babel/runtime-corejs3/download/@babel/runtime-corejs3-7.14.6.tgz#066b966eda40481740180cb3caab861a3f208cd3"
+  integrity sha1-BmuWbtpASBdAGAyzyquGGj8gjNM=
+  dependencies:
+    core-js-pure "^3.14.0"
+    regenerator-runtime "^0.13.4"
+
 "@babel/runtime@7.13.10":
   version "7.13.10"
   resolved "https://registry.nlark.com/@babel/runtime/download/@babel/runtime-7.13.10.tgz?cache=0&sync_timestamp=1619727807559&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40babel%2Fruntime%2Fdownload%2F%40babel%2Fruntime-7.13.10.tgz#47d42a57b6095f4468da440388fdbad8bebf0d7d"
@@ -2500,6 +2508,11 @@ core-js-pure@^3.0.0:
   resolved "https://registry.nlark.com/core-js-pure/download/core-js-pure-3.13.0.tgz#9d267fb47d1d7046cfbc05e7b67bb235b6735355"
   integrity sha1-nSZ/tH0dcEbPvAXntnuyNbZzU1U=
 
+core-js-pure@^3.14.0:
+  version "3.14.0"
+  resolved "https://registry.nlark.com/core-js-pure/download/core-js-pure-3.14.0.tgz?cache=0&sync_timestamp=1622879507303&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fcore-js-pure%2Fdownload%2Fcore-js-pure-3.14.0.tgz#72bcfacba74a65ffce04bf94ae91d966e80ee553"
+  integrity sha1-crz6y6dKZf/OBL+UrpHZZugO5VM=
+
 core-js@^2.4.0:
   version "2.6.12"
   resolved "https://registry.nlark.com/core-js/download/core-js-2.6.12.tgz#d9333dfa7b065e347cc5682219d6f690859cc2ec"
@@ -2509,6 +2522,13 @@ core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.nlark.com/core-util-is/download/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
   integrity sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=
+
+cos-js-sdk-v5@^1.2.13:
+  version "1.2.13"
+  resolved "https://registry.nlark.com/cos-js-sdk-v5/download/cos-js-sdk-v5-1.2.13.tgz#30cd993f67d0b60709f1b532a0a962b89a054c99"
+  integrity sha1-MM2ZP2fQtgcJ8bUyoKliuJoFTJk=
+  dependencies:
+    xmldom "^0.1.31"
 
 cosmiconfig@^7.0.0:
   version "7.0.0"
@@ -7910,6 +7930,11 @@ tslib@^2.0.3:
   resolved "https://registry.npm.taobao.org/tslib/download/tslib-2.2.0.tgz#fb2c475977e35e241311ede2693cee1ec6698f5c"
   integrity sha1-+yxHWXfjXiQTEe3iaTzuHsZpj1w=
 
+tslib@^2.1.0:
+  version "2.3.0"
+  resolved "https://registry.nlark.com/tslib/download/tslib-2.3.0.tgz#803b8cdab3e12ba581a4ca41c8839bbb0dacb09e"
+  integrity sha1-gDuM2rPhK6WBpMpByIObuw2ssJ4=
+
 tunnel-agent@^0.6.0:
   version "0.6.0"
   resolved "https://registry.nlark.com/tunnel-agent/download/tunnel-agent-0.6.0.tgz#27a5dea06b36b04a0a9966774b290868f0fc40fd"
@@ -8121,6 +8146,15 @@ virtualizedtableforantd4@^1.1.2:
   version "1.1.2"
   resolved "https://registry.nlark.com/virtualizedtableforantd4/download/virtualizedtableforantd4-1.1.2.tgz#399a897ca41ba5f5e44c42e8e794cc0072b6acf7"
   integrity sha1-OZqJfKQbpfXkTELo55TMAHK2rPc=
+
+wangeditor@^4.7.4:
+  version "4.7.4"
+  resolved "https://registry.nlark.com/wangeditor/download/wangeditor-4.7.4.tgz#82aec844f520d2d61ec22d9abe9822c12f940f16"
+  integrity sha1-gq7IRPUg0tYewi2avpgiwS+UDxY=
+  dependencies:
+    "@babel/runtime" "^7.11.2"
+    "@babel/runtime-corejs3" "^7.11.2"
+    tslib "^2.1.0"
 
 warning@^4.0.1, warning@^4.0.3:
   version "4.0.3"
@@ -8407,6 +8441,11 @@ ws@^7.3.1:
   version "7.4.6"
   resolved "https://registry.nlark.com/ws/download/ws-7.4.6.tgz?cache=0&sync_timestamp=1621962892726&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fws%2Fdownload%2Fws-7.4.6.tgz#5654ca8ecdeee47c33a9a4bf6d28e2be2980377c"
   integrity sha1-VlTKjs3u5HwzqaS/bSjivimAN3w=
+
+xmldom@^0.1.31:
+  version "0.1.31"
+  resolved "https://registry.nlark.com/xmldom/download/xmldom-0.1.31.tgz#b76c9a1bd9f0a9737e5a72dc37231cf38375e2ff"
+  integrity sha1-t2yaG9nwqXN+WnLcNyMc84N14v8=
 
 y18n@^4.0.0:
   version "4.0.3"

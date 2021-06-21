@@ -6,7 +6,7 @@ import {
 } from 'table-render';
 
 import filterSearchForm from '@/utils/filterSearchForm';
-import schema from '../../../schemas/operator/sign.json';
+import schema from './schema.json';
 import signApi from '../../../api/operator/sign';
 
 const TableBody = forwardRef((props, ref) => {

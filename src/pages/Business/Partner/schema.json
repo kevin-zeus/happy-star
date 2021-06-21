@@ -21,7 +21,8 @@
       "props": {
         "allowClear": true
       },
-      "type": "string"
+      "type": "string",
+      "widget": "imgupload"
     },
     "partner_address": {
       "title": "商家地址",

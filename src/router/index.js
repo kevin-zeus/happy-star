@@ -80,6 +80,106 @@ const config = [
                 name: '用户管理',
                 component: lazy(() => import('../pages/Operator/UserManager')),
               },
+              {
+                path: '/operator/user-detail/:id',
+                name: '用户详情',
+              },
+              {
+                path: '/operator/banner',
+                name: '轮播图管理',
+              },
+              {
+                path: '/operator/richtext',
+                name: '图文详情配置',
+              },
+              {
+                path: '/operator/comment',
+                name: '评论审核',
+              },
+              {
+                path: '/operator/dynamic',
+                name: '动态审核',
+              },
+              {
+                path: '/operator/dynamic-config',
+                name: '动态数据',
+              },
+              {
+                path: '/operator/task-config',
+                name: '抢单任务清单',
+              },
+            ],
+          },
+          {
+            path: '/financial',
+            name: '财务管理',
+            childRoutes: [
+              {
+                path: '/financial/withdrawal',
+                name: '提现审核',
+              },
+              {
+                path: '/financial/withdrawal-pay',
+                name: '提现打款',
+              },
+              {
+                path: '/financial/recharge',
+                name: '人工转账审核',
+              },
+              {
+                path: '/financial/earging',
+                name: '账户交易明细',
+              },
+              {
+                path: '/financial/report-day',
+                name: '财务日报表',
+              },
+              {
+                path: '/financial/report',
+                name: '财务业绩报表',
+              },
+            ],
+          },
+          {
+            path: '/system',
+            name: '系统管理',
+            childRoutes: [
+              {
+                path: '/system/dynamic',
+                name: '最新动态',
+              },
+              {
+                path: '/system/server',
+                name: '客服账号',
+              },
+              {
+                path: '/system/sign',
+                name: '签到奖励',
+              },
+              {
+                path: '/system/invite',
+                name: '邀请奖励',
+              },
+              {
+                path: '/system/admin',
+                name: '账号管理',
+              },
+              {
+                path: '/system/change-password/:id',
+                name: '修改密码',
+              },
+              {
+                path: '/system/department',
+                name: '部门管理',
+              },
+              {
+                path: '/system/role',
+                name: '角色管理',
+              },
+              {
+                path: '/system/role-rule/:id',
+                name: '编辑角色权限',
+              },
             ],
           },
           {

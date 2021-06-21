@@ -8,9 +8,8 @@
       "readOnly": false,
       "hidden": false,
       "props": {
-        "allowClear": true
       },
-      "type": "string"
+      "type": "number"
     },
     "day": {
       "title": "抢单天数",
@@ -19,9 +18,8 @@
       "readOnly": false,
       "hidden": false,
       "props": {
-        "allowClear": true
       },
-      "type": "string"
+      "type": "number"
     },
     "price": {
       "title": "优惠价计算规则（原价为X，抢单人数为Y）",

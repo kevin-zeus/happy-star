@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^1.5.1",
     "antd": "^4.16.0",
     "axios": "^0.21.1",
+    "cos-js-sdk-v5": "^1.2.13",
     "dayjs": "^1.10.5",
     "form-render": "^1.4.4",
     "react": "^17.0.2",
@@ -20,7 +21,8 @@
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
     "table-render": "^1.1.0",
-    "use-immer": "^0.5.2"
+    "use-immer": "^0.5.2",
+    "wangeditor": "^4.7.4"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",

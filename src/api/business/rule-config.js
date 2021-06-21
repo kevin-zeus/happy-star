@@ -6,24 +6,15 @@ class RuleConfigApi extends BaseApi {
     return this.post('/platform/v1/product/rule-config/list');
   }
 
-  // "0": {
-  //   "product_rule_config_id": "string",
-  //   "number": "string",
-  //   "price": "string",
-  //   "rebate": "string",
-  //   "day": "string"
-  // }
   update({
     product_rule_config_id, number, price, rebate, day,
   }) {
     return this.post('/platform/v1/product/rule-config/update', {
-      0: {
-        product_rule_config_id,
-        number,
-        price,
-        rebate,
-        day,
-      },
+      product_rule_config_id,
+      number,
+      price,
+      rebate,
+      day,
     });
   }
 

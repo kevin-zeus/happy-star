@@ -13,8 +13,11 @@ import FormRender, { useForm } from 'form-render';
 
 import productApi from '@/api/business/product';
 import filterSearchForm from '@/utils/filterSearchForm';
-import schemaConfig from '@/schemas/business/product.json';
+import schemaConfig from './schema.json';
 import goodsCategoryApi from '../../../api/business/goods-category';
+
+import ImageUpload from '../../../components/ImageUpload';
+import Editor from '../../../components/Editor';
 
 const TableBody = forwardRef((props, ref) => {
   // tableState
@@ -99,7 +102,14 @@ const TableBody = forwardRef((props, ref) => {
 
   return (
     <div>
-      <Search schema={{ ...filterSearchForm(props.schema), column: 4 }} api={searchApi} displayType="row" />
+      <Search
+        schema={{
+          ...filterSearchForm(props.schema, 'product_name', 'product_category_id', 'status'),
+          column: 4,
+        }}
+        api={searchApi}
+        displayType="row"
+      />
       <Table
         headerTitle="商品管理"
         columns={columns}
@@ -202,12 +212,15 @@ const Product = () => {
           </Button>
         )}
       >
-        {/* TODO:修改商品与查看 */}
         <FormRender
           form={form}
           schema={schema}
           data={currentData}
           onFinish={handleSubmit}
+          widgets={{
+            imgupload: ImageUpload,
+            editor: Editor,
+          }}
         />
       </Drawer>
     </div>

@@ -36,11 +36,11 @@ class GrabOrder extends BaseApi {
   }
 
   // 审核
-  audit({ user_task_id, comment }) {
+  audit({ user_task_id, status, comment }) {
     return this.post('/platform/v1/user/task/audit', {
       user_task_id,
-      status: 3,
       comment,
+      status,
     });
   }
 

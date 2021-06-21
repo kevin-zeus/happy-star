@@ -12,7 +12,7 @@
       },
       "type": "string"
     },
-    "active": {
+    "status": {
       "title": "状态",
       "required": false,
       "disabled": false,

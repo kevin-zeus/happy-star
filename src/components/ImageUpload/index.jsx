@@ -2,11 +2,48 @@ import React, { useState } from 'react';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { Upload, message } from 'antd';
 
+import './style.scss';
+
+import uploadObj from '../../common/upload';
+
+function getUid() {
+  let idStr = Date.now().toString(36);
+  idStr += Math.random().toString(36).substr(2);
+  return idStr;
+}
+
+function value2FileList(value = '') {
+  if (!value) {
+    return [];
+  }
+  return value.split(',').map((url) => ({
+    uid: getUid(),
+    name: 'image',
+    status: 'done',
+    url,
+  }));
+}
+
+function trimArr(value = []) {
+  if (value.length === 0) {
+    return [];
+  }
+  return value.filter((item) => item);
+}
+
+// function fileList2Value(fileList) {
+//   if (fileList.length === 0) {
+//     return '';
+//   }
+//   return fileList.map((item) => item.url).join(',');
+// }
+
 export default function ImageUpload({
   action,
-  value,
+  value = '',
   onChange,
   uploadProps,
+  limit = 1, // 限制多少张，默认为1，只能选一张
 }) {
   const [loading, setLoading] = useState(false);
 
@@ -14,20 +51,26 @@ export default function ImageUpload({
     name: 'file',
     type: 'file',
     action, // 旧的兼容
-    onChange(info) {
-      if (info.file.status === 'done') {
-        message.success(`${info.file.name} 上传成功`);
-        onChange(info.file.response.url);
-        setLoading(false);
-      } else if (info.file.status === 'error') {
-        message.error(`${info.file.name} 上传失败`);
-        setLoading(false);
-      } else if (info.file.status === 'uploading') {
+    beforeUpload: async (file) => {
+      try {
         setLoading(true);
+        const url = await uploadObj.upload(file);
+        setLoading(false);
+
+        const urls = value.split(',');
+        urls.push(url);
+        onChange(trimArr(urls).join(','));
+        return false;
+      } catch (error) {
+        message.error(error.message);
+        return false;
       }
     },
-    onRemove() {
-      onChange('');
+    onRemove(file) {
+      const urls = value.split(',');
+      const fileIndex = urls.findIndex((item) => item === file.url);
+      urls.splice(fileIndex, 1);
+      onChange(urls.join(','));
     },
     ...uploadProps,
   };
@@ -35,14 +78,22 @@ export default function ImageUpload({
   const uploadButton = (
     <div>
       {loading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div style={{ marginTop: 8 }}>Upload</div>
+      <div style={{ marginTop: 8 }}>上传图片</div>
     </div>
   );
 
+  const fileList = value2FileList(value);
+
   return (
     <div className="fr-upload-mod">
-      <Upload {...props} className="fr-upload-file">
-        {value ? <img src={value} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+      <Upload
+        {...props}
+        fileList={fileList}
+        listType="picture-card"
+      >
+        {
+          fileList.length >= limit ? null : uploadButton
+        }
       </Upload>
     </div>
   );

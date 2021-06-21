@@ -1,0 +1,222 @@
+[
+  {
+    "path": "/business",
+    "name": "业务管理",
+    "isHead": true,
+    "icon": "",
+    "childRoutes": [
+      {
+        "path": "/business/goods",
+        "name": "商品管理",
+        "icon": "",
+        "childRoutes": [
+          {
+            "path": "/business/goods-category",
+            "name": "商品分类",
+            "icon": ""
+          },
+          {
+            "path": "/business/product",
+            "name": "商品管理",
+            "icon": ""
+          },
+          {
+            "path": "/business/rule-config",
+            "name": "返利规则",
+            "icon": ""
+          }
+        ]
+      },
+      {
+        "path": "/business/grab-order",
+        "name": "抢单任务",
+        "icon": ""
+      },
+      {
+        "path": "/business/partner",
+        "name": "合作商家",
+        "icon": ""
+      },
+      {
+        "path": "/business/delivery",
+        "name": "发货管理",
+        "icon": ""
+      }
+    ]
+  },
+  {
+    "path": "/operator",
+    "name": "运营管理",
+    "isHead": true,
+    "icon": "",
+    "childRoutes": [
+      {
+        "path": "/operator/sign",
+        "name": "签到管理",
+        "icon": "",
+        "childRoutes": [
+          {
+            "path": "/operator/user-sign",
+            "name": "用户签到列表",
+            "icon": ""
+          },
+          {
+            "path": "/operator/sign-reward",
+            "name": "签到奖励记录",
+            "icon": ""
+          }
+        ]
+      },
+      {
+        "path": "/operator/user-manager",
+        "name": "用户管理",
+        "icon": ""
+      },
+      {
+        "path": "/operator/content",
+        "name": "内容管理",
+        "childRoutes": [
+          {
+            "path": "/operator/banner",
+            "name": "轮播图管理",
+            "icon": ""
+          },
+          {
+            "path": "/operator/richtext",
+            "name": "图文详情配置",
+            "icon": ""
+          },
+          {
+            "path": "/operator/comment",
+            "name": "评论审核",
+            "icon": ""
+          },
+          {
+            "path": "/operator/dynamic",
+            "name": "动态审核",
+            "icon": ""
+          },
+          {
+            "path": "/operator/dynamic-config",
+            "name": "动态数据",
+            "icon": ""
+          },
+          {
+            "path": "/operator/task-config",
+            "name": "抢单任务清单",
+            "icon": ""
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "path": "/financial",
+    "name": "财务管理",
+    "isHead": true,
+    "icon": "",
+    "childRoutes": [
+      {
+        "path": "/financial/work",
+        "name": "财务工作",
+        "icon": "",
+        "childRoutes": [
+          {
+            "path": "/financial/withdrawal",
+            "name": "提现审核",
+            "icon": ""
+          },
+          {
+            "path": "/financial/withdrawal-pay",
+            "name": "提现打款",
+            "icon": ""
+          },
+          {
+            "path": "/financial/recharge",
+            "name": "人工转账审核",
+            "icon": ""
+          }
+        ]
+      },
+      {
+        "path": "/financial/earging",
+        "name": "财务管理",
+        "icon": ""
+      },
+      {
+        "path": "/financial/count",
+        "name": "财务报表",
+        "icon": "",
+        "childRoutes": [
+          {
+            "path": "/financial/report-day",
+            "name": "财务日报表",
+            "icon": ""
+          },
+          {
+            "path": "/financial/report",
+            "name": "财务业绩报表",
+            "icon": ""
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "path": "/system",
+    "name": "系统管理",
+    "isHead": true,
+    "icon": "",
+    "childRoutes": [
+      {
+        "path": "/system/base",
+        "name": "基础配置",
+        "icon": "",
+        "childRoutes": [
+          {
+            "path": "/system/dynamic",
+            "name": "最新动态",
+            "icon": ""
+          },
+          {
+            "path": "/system/server",
+            "name": "客服账号",
+            "icon": ""
+          },
+          {
+            "path": "/system/sign",
+            "name": "签到奖励",
+            "icon": ""
+          },
+          {
+            "path": "/system/invite",
+            "name": "邀请奖励",
+            "icon": ""
+          }
+        ]
+      },
+      {
+        "path": "/system/account",
+        "name": "账号权限管理",
+        "icon": "",
+        "childRoutes": [
+          {
+            "path": "/system/admin",
+            "name": "账号管理",
+            "icon": ""
+          },
+          {
+            "path": "/system/department",
+            "name": "部门管理",
+            "icon": ""
+          },
+          {
+            "path": "/system/role",
+            "name": "角色管理",
+            "icon": ""
+          }
+        ]
+      }
+    ]
+  }
+]

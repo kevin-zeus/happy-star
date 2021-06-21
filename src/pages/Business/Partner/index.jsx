@@ -12,8 +12,9 @@ import {
 import FormRender, { useForm } from 'form-render';
 
 import filterSearchForm from '@/utils/filterSearchForm';
-import schema from '../../../schemas/business/partner.json';
+import schema from './schema.json';
 import partnerApi from '../../../api/business/partner';
+import ImageUpload from '../../../components/ImageUpload';
 
 const TableBody = forwardRef((props, ref) => {
   // tableState
@@ -183,12 +184,14 @@ const Partner = () => {
           </Button>
         )}
       >
-        {/* TODO:修改商品与查看 */}
         <FormRender
           form={form}
           schema={schema}
           data={currentData}
           onFinish={handleSubmit}
+          widgets={{
+            imgupload: ImageUpload,
+          }}
         />
       </Drawer>
     </div>

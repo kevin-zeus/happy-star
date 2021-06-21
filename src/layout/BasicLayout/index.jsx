@@ -1,22 +1,34 @@
 import React, { useEffect } from 'react';
 import { Layout } from 'antd';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import SiderMenu from '../SiderMenu';
 import MainHeader from '../MainHeader';
+
+import systemConfigApi from '../../api/system/config';
+import { setHeaderMenus } from '../../store/global';
 
 import './style.scss';
 
 const BasicLayout = ({ children }) => {
   const history = useHistory();
   const globalStore = useSelector((state) => state.global);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     document.title = globalStore.appTitle;
     if (!localStorage.getItem('token')) {
       history.replace('/login');
     }
+
+    (async () => {
+      const [, res] = await systemConfigApi.menu();
+      console.log('res', res);
+      if (res && res.result) {
+        dispatch(setHeaderMenus(res.result));
+      }
+    })();
   }, []);
 
   return (

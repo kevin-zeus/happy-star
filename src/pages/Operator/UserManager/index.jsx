@@ -7,7 +7,7 @@ import {
 import { Button } from 'antd';
 
 import filterSearchForm from '@/utils/filterSearchForm';
-import schema from '../../../schemas/operator/user.json';
+import schema from './schema.json';
 import userManagerApi from '../../../api/operator/user-manager';
 
 const TableBody = forwardRef((props, ref) => {

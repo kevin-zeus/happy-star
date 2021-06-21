@@ -11,7 +11,7 @@ import {
 import FormRender, { useForm } from 'form-render';
 
 import filterSearchForm from '@/utils/filterSearchForm';
-import schema from '../../../schemas/business/delivery.json';
+import schema from './schema.json';
 import deliveryApi from '../../../api/business/delivery';
 
 const TableBody = forwardRef((props, ref) => {

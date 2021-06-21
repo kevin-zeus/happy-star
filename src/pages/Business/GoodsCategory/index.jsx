@@ -10,7 +10,7 @@ import FormRender, { useForm } from 'form-render';
 
 import goodsCategoryApi from '@/api/business/goods-category';
 import filterSearchForm from '@/utils/filterSearchForm';
-import schema from '@/schemas/business/goods-category.json';
+import schema from './schema.json';
 
 const TableBody = forwardRef((props, ref) => {
   // tableState
@@ -75,7 +75,14 @@ const TableBody = forwardRef((props, ref) => {
 
   return (
     <div>
-      <Search schema={{ ...filterSearchForm(schema), column: 4 }} api={searchApi} displayType="row" />
+      <Search
+        schema={{
+          ...filterSearchForm(schema, 'product_category_name', 'active'),
+          column: 4,
+        }}
+        api={searchApi}
+        displayType="row"
+      />
       <Table
         headerTitle="商品分类"
         columns={columns}
