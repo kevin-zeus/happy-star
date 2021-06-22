@@ -15,15 +15,15 @@ class BannerApi extends BaseApi {
   }
 
   create({
-    banner_name, image, type, relation_id, start_date, end_date, sort, comment,
+    banner_name, image, type, relation_id, range_date, sort, comment,
   }) {
     return this.post('/platform/v1/content/banner/create', {
       banner_name,
       image,
       type,
       relation_id,
-      start_date,
-      end_date,
+      start_date: range_date[0],
+      end_date: range_date[1],
       sort,
       comment,
     });

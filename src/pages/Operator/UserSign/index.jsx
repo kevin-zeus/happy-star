@@ -37,7 +37,7 @@ const TableBody = forwardRef((props, ref) => {
     },
     {
       title: '签到人',
-      dataIndex: 'user',
+      dataIndex: ['user', 'nickname'],
     },
     {
       title: '签到时间',
@@ -60,7 +60,7 @@ const TableBody = forwardRef((props, ref) => {
       <Table
         headerTitle="用户签到列表"
         columns={columns}
-        rowKey="partner_id"
+        rowKey="sign_id"
         toolbarRender={toolbarRender}
       />
     </div>

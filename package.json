@@ -6,7 +6,9 @@
   "scripts": {
     "start:mock": "cross-env NODE_ENV=development webpack serve --config config/webpack.dev.js",
     "start": "cross-env NODE_ENV=development webpack serve --config config/webpack.dev.js",
-    "build": "cross-env NODE_ENV=production webpack --config config/webpack.common.js"
+    "build": "cross-env NODE_ENV=production webpack --config config/webpack.prod.js",
+    "build:watch": "cross-env NODE_ENV=production webpack --config config/webpack.prod.js",
+    "build:report": "cross-env NODE_ENV=production webpack --config config/webpack.prod.js"
   },
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
@@ -36,6 +38,7 @@
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.2",
     "babel-plugin-import": "^1.13.3",
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
     "copy-webpack-plugin": "^9.0.0",
     "cross-env": "^7.0.3",
     "css-loader": "^5.2.6",

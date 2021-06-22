@@ -5,6 +5,7 @@ import {
   Table, Search, TableProvider, useTable,
 } from 'table-render';
 import { Button } from 'antd';
+import { useHistory } from 'react-router-dom';
 
 import filterSearchForm from '@/utils/filterSearchForm';
 import schema from './schema.json';
@@ -109,8 +110,10 @@ const TableBody = forwardRef((props, ref) => {
 });
 
 const SingReward = () => {
-  const showDetail = () => {
+  const history = useHistory();
 
+  const showDetail = (row) => {
+    history.push(`/operator/user-detail/${row.user_id}`);
   };
 
   return (

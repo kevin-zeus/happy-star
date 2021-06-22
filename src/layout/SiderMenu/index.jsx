@@ -38,6 +38,7 @@ const renderMenuItem = (target) => target
 const SiderMenu = ({ routes }) => {
   // router
   const { pathname } = useLocation();
+  console.log(pathname);
   // store
   const globalStore = useSelector((state) => state.global);
   // state
@@ -45,12 +46,15 @@ const SiderMenu = ({ routes }) => {
 
   useEffect(() => {
     const list = pathname.split('/').splice(1);
-    setOpenKeys(list.map((item, index) => `/${list.slice(0, index + 1).join('/')}`));
+    setOpenKeys(list.map((item, index) => `/${list.slice(0, index + 1).join('/')}`).splice(1));
   }, []);
 
   const getSelectedKeys = useMemo(() => {
+    console.log('selectedKey', pathname);
     const list = pathname.split('/').splice(1);
-    return list.map((item, index) => `/${list.slice(0, index + 1).join('/')}`);
+    const keys = list.map((item, index) => `/${list.slice(0, index + 1).join('/')}`).splice(1);
+    console.log(keys);
+    return keys;
   }, [pathname]);
 
   const onOpenChange = (keys) => {

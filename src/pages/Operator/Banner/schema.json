@@ -1,0 +1,101 @@
+{
+  "type": "object",
+  "properties": {
+    "banner_name": {
+      "title": "轮播图名称",
+      "required": true,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+      },
+      "type": "string"
+    },
+    "status": {
+      "title": "轮播图名称",
+      "required": true,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "enum": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "enumNames": [
+        "待生效",
+        "已生效",
+        "暂存中",
+        "已下架"
+      ],
+      "type": "string",
+      "widget": "select"
+    },
+    "image": {
+      "title": "图片",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+      },
+      "type": "string",
+      "widget": "imgupload"
+    },
+    "type": {
+      "title": "跳转类型",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+        "allowClear": true
+      },
+      "type": "string"
+    },
+    "relation_id": {
+      "title": "跳转编号",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+        "allowClear": true
+      },
+      "type": "string"
+    },
+    "range_date": {
+      "title": "展示时间",
+      "type": "range",
+      "format": "dateTime",
+      "props": {
+        "placeholder": [
+          "开始时间",
+          "结束时间"
+        ]
+      }
+    },
+    "sort": {
+      "title": "优先级",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {},
+      "type": "number"
+    },
+    "comment": {
+      "title": "备注",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+        "allowClear": true
+      },
+      "type": "string"
+    }
+  },
+  "showDescIcon": true
+}

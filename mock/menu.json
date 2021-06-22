@@ -6,22 +6,22 @@
     "icon": "",
     "childRoutes": [
       {
-        "path": "/business/goods",
+        "path": "/business/product",
         "name": "商品管理",
         "icon": "",
         "childRoutes": [
           {
-            "path": "/business/goods-category",
+            "path": "/business/product/goods-category",
             "name": "商品分类",
             "icon": ""
           },
           {
-            "path": "/business/product",
+            "path": "/business/product/product",
             "name": "商品管理",
             "icon": ""
           },
           {
-            "path": "/business/rule-config",
+            "path": "/business/product/rule-config",
             "name": "返利规则",
             "icon": ""
           }
@@ -56,12 +56,12 @@
         "icon": "",
         "childRoutes": [
           {
-            "path": "/operator/user-sign",
+            "path": "/operator/sign/user-sign",
             "name": "用户签到列表",
             "icon": ""
           },
           {
-            "path": "/operator/sign-reward",
+            "path": "/operator/sign/sign-reward",
             "name": "签到奖励记录",
             "icon": ""
           }

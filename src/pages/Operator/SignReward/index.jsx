@@ -33,14 +33,18 @@ const TableBody = forwardRef((props, ref) => {
   const columns = [
     {
       title: '奖励记录ID',
-      dataIndex: 'sign_id',
+      dataIndex: 'user_wallet_log_id',
     },
     {
       title: '签到人',
-      dataIndex: 'user',
+      dataIndex: ['user', 'nickname'],
     },
     {
       title: '奖励金额',
+      dataIndex: 'price',
+    },
+    {
+      title: '奖励时间',
       dataIndex: 'create_at',
     },
   ];
@@ -60,7 +64,7 @@ const TableBody = forwardRef((props, ref) => {
       <Table
         headerTitle="签到奖励记录"
         columns={columns}
-        rowKey="partner_id"
+        rowKey="user_wallet_log_id"
         toolbarRender={toolbarRender}
       />
     </div>

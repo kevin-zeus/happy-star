@@ -29,25 +29,31 @@ const config = [
             name: '业务管理',
             childRoutes: [
               {
-                path: '/business/goods-category',
-                name: '商品分类',
-                component: lazy(() => import('../pages/Business/GoodsCategory')),
-              },
-              {
                 path: '/business/product',
                 name: '商品管理',
-                component: lazy(() => import('../pages/Business/Product')),
+                childRoutes: [
+                  {
+                    path: '/business/product/goods-category',
+                    name: '商品分类',
+                    component: lazy(() => import('../pages/Business/GoodsCategory')),
+                  },
+                  {
+                    path: '/business/product/product',
+                    name: '商品管理',
+                    component: lazy(() => import('../pages/Business/Product')),
+                  },
+                  {
+                    path: '/business/product/rule-config',
+                    name: '返利规则',
+                    component: lazy(() => import('../pages/Business/RuleConfig')),
+                  },
+                ],
               },
               {
                 path: '/business/grab-order',
                 name: '抢单任务',
                 exact: true,
                 component: lazy(() => import('../pages/Business/GrabOrder')),
-              },
-              {
-                path: '/business/rule-config',
-                name: '返利规则',
-                component: lazy(() => import('../pages/Business/RuleConfig')),
               },
               {
                 path: '/business/partner',
@@ -83,10 +89,12 @@ const config = [
               {
                 path: '/operator/user-detail/:id',
                 name: '用户详情',
+                component: lazy(() => import('../pages/Operator/UserDetail')),
               },
               {
                 path: '/operator/banner',
                 name: '轮播图管理',
+                component: lazy(() => import('../pages/Operator/Banner')),
               },
               {
                 path: '/operator/richtext',

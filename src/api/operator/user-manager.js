@@ -49,6 +49,17 @@ class UserManager extends BaseApi {
     });
   }
 
+  // 抢单记录
+  taskJoin({
+    current, pageSize, user_id,
+  }) {
+    return this.post('/platform/v1/user/user/user-task-join', {
+      current,
+      pageSize,
+      user_id,
+    });
+  }
+
   // 用户发起的抢单任务列表
   taskList({
     current, pageSize, user_id,
@@ -115,7 +126,7 @@ class UserManager extends BaseApi {
     });
   }
 
-  // 用户返利记录
+  // 用户在线记录
   onlineList({
     current, pageSize, user_id,
   }) {

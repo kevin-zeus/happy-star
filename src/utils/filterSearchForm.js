@@ -4,6 +4,11 @@ export default function (schema, ...field) {
     Object.keys(newSchema.properties).forEach((key) => {
       if (!field.includes(key)) {
         delete newSchema.properties[key];
+      } else {
+        newSchema.properties[key].required = false;
+        newSchema.properties[key].disabled = false;
+        newSchema.properties[key].readOnly = false;
+        newSchema.properties[key].hidden = false;
       }
     });
   }
