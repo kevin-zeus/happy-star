@@ -16,7 +16,7 @@ class WithdrawalPay extends BaseApi {
   }
 
   // 提现审核
-  audit({
+  pay({
     user_withdrawal_id, state, comment,
   }) {
     return this.post('/platform/v1/user/withdrawal-pay/pay', {

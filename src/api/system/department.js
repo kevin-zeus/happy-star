@@ -20,25 +20,32 @@ class DepartmentApi extends BaseApi {
   }
 
   create({
-    department_name, pid, pid2,
+    department_name, department,
   }) {
-    return this.post('​/platform​/v1/platform/department/create', {
-      department_name, pid, pid2,
+    const depart = department.split(',');
+    return this.post('/platform/v1/platform/department/create', {
+      department_name,
+      pid: depart[0],
+      pid2: depart[1],
     });
   }
 
   update({
-    department_id, department_name, pid, pid2,
+    department_id, department_name, department,
   }) {
-    return this.post('​/platform​/v1​/platform/department/update', {
-      department_id, department_name, pid, pid2,
+    const depart = department.split(',');
+    return this.post('/platform/v1/platform/department/update', {
+      department_id,
+      department_name,
+      pid: depart[0],
+      pid2: depart[1],
     });
   }
 
   edit({
     department_id,
   }) {
-    return this.post('/platform​/v1​/platform/department/edit', {
+    return this.post('/platform/v1/platform/department/edit', {
       department_id,
     });
   }
@@ -46,7 +53,7 @@ class DepartmentApi extends BaseApi {
   remove({
     department_id,
   }) {
-    return this.post('/platform​/v1​/platform/department/remove', {
+    return this.post('/platform/v1/platform/department/remove', {
       department_id,
     });
   }

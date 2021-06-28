@@ -42,5 +42,6 @@ module.exports = {
     'jsx-a11y/anchor-is-valid': 0,
     'max-len': 0,
     'func-names': 0,
+    camelcase: 0,
   },
 };

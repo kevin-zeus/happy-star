@@ -1,16 +1,23 @@
 import React, {
-  useState, useCallback, useImperativeHandle, forwardRef, useRef,
+  useState, useImperativeHandle, forwardRef, useRef,
 } from 'react';
-import { Button, Drawer, message } from 'antd';
+import {
+  Button, Drawer, message, Image,
+} from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import {
   Table, Search, TableProvider, useTable,
 } from 'table-render';
 import FormRender, { useForm } from 'form-render';
+import { useDispatch } from 'react-redux';
 
 import goodsCategoryApi from '@/api/business/goods-category';
 import filterSearchForm from '@/utils/filterSearchForm';
-import schema from './schema.json';
+import filterDrawerForm from '../../../utils/filterDrawerForm';
+import { setCategory } from '../../../store/goodsCategory';
+import CategorySelect from '../../../components/CategorySelect/CategoryLevel1';
+import ImageUpload from '../../../components/ImageUpload';
+import schemaConfig from './schema.json';
 
 const TableBody = forwardRef((props, ref) => {
   // tableState
@@ -39,17 +46,38 @@ const TableBody = forwardRef((props, ref) => {
       dataIndex: 'product_category_id',
     },
     {
+      title: '排序',
+      dataIndex: 'sort',
+    },
+    {
       title: '商品分类名',
       dataIndex: 'product_category_name',
+    },
+    {
+      title: '分类图片',
+      dataIndex: 'category_image',
+      render: (data) => <Image src={data} width={64} height={48} />,
+    },
+    {
+      title: '分类层级',
+      dataIndex: '',
+      render: (row) => (row.pid !== '0' ? '二级分类' : '一级分类'),
+    },
+    {
+      title: '所属一级分类',
+      dataIndex: '',
+      render: (row) => {
+        let res = '/';
+        if (row.pid !== '0') {
+          res = row.p_category.product_category_name;
+        }
+        return res;
+      },
     },
     {
       title: '状态',
       dataIndex: 'active',
       render: (record) => (record === 1 ? <span style={{ color: 'green' }}>正常</span> : <span style={{ color: 'red' }}>禁用</span>),
-    },
-    {
-      title: '排序',
-      dataIndex: 'sort',
     },
     {
       title: '最近修改时间',
@@ -77,7 +105,7 @@ const TableBody = forwardRef((props, ref) => {
     <div>
       <Search
         schema={{
-          ...filterSearchForm(schema, 'product_category_name', 'active'),
+          ...filterSearchForm(schemaConfig, 'product_category_name', 'level', 'active'),
           column: 4,
         }}
         api={searchApi}
@@ -95,17 +123,35 @@ const TableBody = forwardRef((props, ref) => {
 
 const GoodsCategory = () => {
   const tableRef = useRef();
+  const dispatch = useDispatch();
   // state
   const [showDrawer, setShowDrawer] = useState(false);
   const [currentData, setCurrentData] = useState(null);
+  const [schema, setSchema] = useState(filterDrawerForm(schemaConfig, [
+    'product_category_name', 'level', 'category_image', 'active', 'sort',
+  ], 'product_category_id'));
 
   const form = useForm();
 
-  const editCurrentData = useCallback((data) => {
-    setCurrentData(data);
-    setShowDrawer(true);
-    form?.setValues(data);
-  }, [setCurrentData]);
+  const refreshCategorySelect = async () => {
+    const [, res] = await goodsCategoryApi.getAll({});
+    if (res) {
+      dispatch(setCategory(res.result));
+    }
+  };
+
+  const editCurrentData = async ({ product_category_id }) => {
+    const [, res] = await goodsCategoryApi.edit({ product_category_id });
+    if (res) {
+      const data = res.result;
+      if (data.start_date && data.end_date) {
+        data.range_date = [data.start_date, data.end_date];
+      }
+      setCurrentData(data);
+      setShowDrawer(true);
+      form?.setValues(data);
+    }
+  };
 
   const createRequest = async (values) => {
     const [, res] = await goodsCategoryApi.create(values);
@@ -120,6 +166,7 @@ const GoodsCategory = () => {
     setCurrentData(null);
     setShowDrawer(true);
     form?.setValues({});
+    refreshCategorySelect();
   };
 
   const updateRequest = async (values) => {
@@ -170,6 +217,27 @@ const GoodsCategory = () => {
           schema={schema}
           data={currentData}
           onFinish={handleSubmit}
+          widgets={{
+            category: CategorySelect,
+            imgupload: ImageUpload,
+          }}
+          watch={{
+            level: (val) => {
+              if (val === 2) {
+                setSchema(
+                  filterDrawerForm(schemaConfig, [
+                    'product_category_name', 'level', 'pid', 'category_image', 'active', 'sort',
+                  ], 'product_category_id'),
+                );
+              } else {
+                setSchema(
+                  filterDrawerForm(schemaConfig, [
+                    'product_category_name', 'level', 'category_image', 'active', 'sort',
+                  ], 'product_category_id'),
+                );
+              }
+            },
+          }}
         />
       </Drawer>
     </div>

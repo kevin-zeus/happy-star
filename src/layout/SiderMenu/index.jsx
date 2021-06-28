@@ -50,16 +50,18 @@ const SiderMenu = ({ routes }) => {
   }, []);
 
   const getSelectedKeys = useMemo(() => {
-    console.log('selectedKey', pathname);
     const list = pathname.split('/').splice(1);
-    const keys = list.map((item, index) => `/${list.slice(0, index + 1).join('/')}`).splice(1);
-    console.log(keys);
-    return keys;
+    return list.map((item, index) => `/${list.slice(0, index + 1).join('/')}`).splice(1);
   }, [pathname]);
 
   const onOpenChange = (keys) => {
-    setOpenKeys(keys);
+    if (keys && keys.length > 0) {
+      setOpenKeys(keys);
+    }
   };
+
+  // console.log('openKeys', openKeys);
+  // console.log('selectedKeys', getSelectedKeys);
 
   return (
     <Layout.Sider trigger={null} collapsible collapsed={globalStore.collapsed} className="main-left-slider">

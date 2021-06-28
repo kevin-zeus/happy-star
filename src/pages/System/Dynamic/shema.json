@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "properties": {
+    "notice_id": {
+      "title": "ID",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+      },
+      "type": "string"
+    },
+    "content": {
+      "title": "内容",
+      "required": true,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+        "placeholder": "最多30个汉字"
+      },
+      "type": "string"
+    }
+  },
+  "showDescIcon": true
+}

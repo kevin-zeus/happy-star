@@ -25,7 +25,8 @@ class ProductApi extends BaseApi {
   //   }
   // ]
   create({
-    product_name, product_image, product_category_id, price, status, description, rule, image,
+    product_name, product_image, product_category_id = '0', price, status, description, rule, image,
+    second_category_id = '0',
   }) {
     return this.post('/platform/v1/product/product/create', {
       product_image,
@@ -36,17 +37,20 @@ class ProductApi extends BaseApi {
       description,
       rule,
       image,
+      second_category_id,
     });
   }
 
   update({
-    product_id, product_name, product_image, product_category_id, price, status, description, rule, image,
+    product_id, product_name, product_image, product_category_id = '0', price, status, description, rule, image,
+    second_category_id = '0',
   }) {
     return this.post('/platform/v1/product/product/update', {
       product_id,
       product_image,
       product_name,
       product_category_id,
+      second_category_id,
       price,
       status,
       description,

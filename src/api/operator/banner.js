@@ -30,7 +30,7 @@ class BannerApi extends BaseApi {
   }
 
   update({
-    banner_id, banner_name, image, type, relation_id, start_date, end_date, sort, comment,
+    banner_id, banner_name, image, type, relation_id, range_date, sort, comment,
   }) {
     return this.post('/platform/v1/content/banner/update', {
       banner_id,
@@ -38,8 +38,8 @@ class BannerApi extends BaseApi {
       image,
       type,
       relation_id,
-      start_date,
-      end_date,
+      start_date: range_date[0],
+      end_date: range_date[1],
       sort,
       comment,
     });

@@ -1,0 +1,71 @@
+{
+  "type": "object",
+  "properties": {
+    "task_config_id": {
+      "title": "ID",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+      },
+      "type": "string"
+    },
+    "name": {
+      "title": "名称",
+      "required": true,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+      },
+      "type": "string"
+    },
+    "type": {
+      "title": "关联类型",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+      },
+      "type": "string"
+    },
+    "relation_id": {
+      "title": "关联ID",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+      },
+      "type": "string"
+    },
+    "status": {
+      "title": "状态",
+      "required": true,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "enum": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "enumNames": [
+        "待上架",
+        "上架中",
+        "已下架",
+        "已过期"
+      ],
+      "props": {
+        "allowClear": true,
+        "placeholder": "全部"
+      },
+      "type": "number",
+      "widget": "select"
+    }
+  },
+  "showDescIcon": true
+}

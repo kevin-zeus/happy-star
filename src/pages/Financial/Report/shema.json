@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "properties": {
+    "month": {
+      "title": "月份",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+
+      },
+      "type": "string",
+      "format": "month"
+    }
+  },
+  "showDescIcon": true
+}

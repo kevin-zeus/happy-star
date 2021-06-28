@@ -1,14 +1,14 @@
-import React, { createRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import WangEditor from 'wangeditor';
 
 import uploadObj from '../../common/upload';
 
 const Editor = ({
-  value,
+  value = '',
   onChange,
 }) => {
-  const editorRef = createRef();
-  const editor = createRef();
+  const editorRef = useRef();
+  const editor = useRef();
 
   useEffect(() => {
     if (editorRef.current) {
@@ -43,6 +43,10 @@ const Editor = ({
       editor.current?.destory();
     };
   }, []);
+
+  useEffect(() => {
+    editor.current?.txt.html(value);
+  }, [value]);
 
   return (
     <div ref={editorRef} />

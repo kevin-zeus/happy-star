@@ -2,7 +2,7 @@
 import BaseApi from '../base';
 
 class ReportApi extends BaseApi {
-  // 获取提现申请列表
+  // 日报表
   day({
     current, pageSize,
   }) {
@@ -14,13 +14,22 @@ class ReportApi extends BaseApi {
 
   // 业绩报表
   getList({
-    current, pageSize, month,
+    current, pageSize, month, platform_id
   }) {
     return this.post('/platform/v1/system/report/list', {
       page: current,
       pageSize,
       month,
+      platform_id,
     });
+  }
+
+  platform() {
+    return this.post('/platform/v1/system/report/platform');
+  }
+
+  department() {
+    return this.post('/platform/v1/system/report/department');
   }
 }
 

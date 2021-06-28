@@ -1,6 +1,5 @@
 import React, {
-  useState, useCallback, useImperativeHandle, forwardRef, useRef,
-  useEffect,
+  useState, useImperativeHandle, forwardRef, useRef, useEffect,
 } from 'react';
 import {
   Button, Drawer, message,
@@ -10,11 +9,18 @@ import {
   Table, Search, TableProvider, useTable,
 } from 'table-render';
 import FormRender, { useForm } from 'form-render';
+import { useDispatch } from 'react-redux';
+import { useDebounceFn } from 'ahooks';
 
 import productApi from '@/api/business/product';
 import filterSearchForm from '@/utils/filterSearchForm';
+import { setCategory, setCategory2 } from '../../../store/goodsCategory';
+import filterDrawerForm from '../../../utils/filterDrawerForm';
 import schemaConfig from './schema.json';
+import CategorySelect1 from '../../../components/CategorySelect/CategoryLevel1';
+import CategorySelect2 from '../../../components/CategorySelect/CategoryLevel2';
 import goodsCategoryApi from '../../../api/business/goods-category';
+import ruleConfigApi from '../../../api/business/rule-config';
 
 import ImageUpload from '../../../components/ImageUpload';
 import Editor from '../../../components/Editor';
@@ -104,11 +110,15 @@ const TableBody = forwardRef((props, ref) => {
     <div>
       <Search
         schema={{
-          ...filterSearchForm(props.schema, 'product_name', 'product_category_id', 'status'),
+          ...filterSearchForm(schemaConfig, 'product_name', 'product_category_id', 'status', 'second_category_id'),
           column: 4,
         }}
         api={searchApi}
         displayType="row"
+        widgets={{
+          category1: CategorySelect1,
+          category2: CategorySelect2,
+        }}
       />
       <Table
         headerTitle="商品管理"
@@ -122,18 +132,61 @@ const TableBody = forwardRef((props, ref) => {
 
 const Product = () => {
   const tableRef = useRef();
+  const dispatch = useDispatch();
   // state
   const [showDrawer, setShowDrawer] = useState(false);
   const [currentData, setCurrentData] = useState(null);
-  const [schema, setSchema] = useState(schemaConfig);
 
   const form = useForm();
 
-  const editCurrentData = useCallback((data) => {
-    setCurrentData(data);
-    setShowDrawer(true);
-    form?.setValues(data);
-  }, [setCurrentData]);
+  const calculate = async ({ price }) => {
+    const [, res] = await ruleConfigApi.calculate({ price });
+    if (res) {
+      form?.setValues({
+        ...form?.getValues(),
+        rule: res.result,
+      });
+    }
+  };
+
+  const { run } = useDebounceFn(
+    (price) => {
+      calculate({ price });
+    },
+    { wait: 1500 },
+  );
+
+  const getCategory1 = async () => {
+    const [, res] = await goodsCategoryApi.getAll({});
+    if (res) {
+      dispatch(setCategory(res.result || []));
+    }
+  };
+
+  const getCategory2 = async ({ pid }) => {
+    const [, res] = await goodsCategoryApi.getAll({ pid });
+    if (res) {
+      dispatch(setCategory2(res.result || []));
+    }
+  };
+
+  useEffect(() => {
+    getCategory1();
+  }, []);
+
+  const editCurrentData = async ({ product_id }) => {
+    const [, res] = await productApi.edit({ product_id });
+    if (res) {
+      const data = res.result;
+      if (data.start_date && data.end_date) {
+        data.range_date = [data.start_date, data.end_date];
+      }
+      setCurrentData(data);
+      setShowDrawer(true);
+      form?.setValues(data);
+      getCategory1();
+    }
+  };
 
   const createRequest = async (values) => {
     const [, res] = await productApi.create(values);
@@ -148,6 +201,7 @@ const Product = () => {
     setCurrentData(null);
     setShowDrawer(true);
     form?.setValues({});
+    getCategory1();
   };
 
   const updateRequest = async (values) => {
@@ -172,24 +226,6 @@ const Product = () => {
     }
   };
 
-  useEffect(() => {
-    (async function () {
-      const [, res] = await goodsCategoryApi.getAll();
-      const newSchema = JSON.parse(JSON.stringify(schemaConfig));
-      if (res) {
-        if (newSchema.properties.product_category_id) {
-          newSchema.properties.product_category_id.enum = res.result.map((category) => category.product_category_id);
-          newSchema.properties.product_category_id.enumNames = res.result.map((category) => category.product_category_name);
-        }
-      } else {
-        delete newSchema.properties.product_category_id;
-      }
-      setSchema(newSchema);
-    }());
-  }, []);
-
-  console.log(schema);
-
   return (
     <div>
       <TableProvider>
@@ -197,7 +233,6 @@ const Product = () => {
           ref={tableRef}
           createItem={createItem}
           editCurrentData={editCurrentData}
-          schema={schema}
         />
       </TableProvider>
       <Drawer
@@ -214,12 +249,25 @@ const Product = () => {
       >
         <FormRender
           form={form}
-          schema={schema}
+          schema={filterDrawerForm(schemaConfig, [
+            'product_name', 'price', 'product_image', 'image', 'status', 'product_category_id',
+            'second_category_id', 'rule', 'description',
+          ], 'product_id')}
           data={currentData}
           onFinish={handleSubmit}
           widgets={{
             imgupload: ImageUpload,
             editor: Editor,
+            category1: CategorySelect1,
+            category2: CategorySelect2,
+          }}
+          watch={{
+            product_category_id: (val) => getCategory2({ pid: val }),
+            price: (val) => {
+              if (val !== currentData.price) {
+                run(val);
+              }
+            },
           }}
         />
       </Drawer>

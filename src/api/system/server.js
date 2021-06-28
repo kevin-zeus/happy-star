@@ -15,32 +15,33 @@ class ServerApi extends BaseApi {
   create({
     name, type, account,
   }) {
-    return this.post('​/platform​/v1​/system​/server​/create', {
+    console.log('准备发起请求');
+    return this.post('/platform/v1/system/server/create', {
       name, type, account,
     });
   }
 
   update({
-    server_id, name, type, account,
+    service_id, name, type, account,
   }) {
-    return this.post('​/platform​/v1​/system​/server​/update', {
-      server_id, name, type, account,
+    return this.post('/platform/v1/system/server/update', {
+      service_id, name, type, account,
     });
   }
 
   edit({
-    server_id,
+    service_id,
   }) {
-    return this.post('/platform​/v1​/system​/server​/edit', {
-      server_id,
+    return this.post('/platform/v1/system/server/edit', {
+      service_id,
     });
   }
 
   remove({
-    server_id,
+    service_id,
   }) {
     return this.post('/platform​/v1​/system​/server​/remove', {
-      server_id,
+      service_id,
     });
   }
 }

@@ -12,6 +12,51 @@
       },
       "type": "string"
     },
+    "level": {
+      "title": "分类层级",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "enum": [
+        1,
+        2
+      ],
+      "props": {
+        "allowClear": true,
+        "placeholder": "全部"
+      },
+      "enumNames": [
+        "一级分类",
+        "二级分类"
+      ],
+      "type": "number",
+      "widget": "select"
+    },
+    "category_image": {
+      "title": "分类图片",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+        "allowClear": true
+      },
+      "type": "string",
+      "widget": "imgupload"
+    },
+    "pid": {
+      "title": "所属一级分类",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+        "allowClear": true
+      },
+      "type": "string",
+      "widget": "category"
+    },
     "active": {
       "title": "状态",
       "required": false,

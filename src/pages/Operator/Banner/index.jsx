@@ -2,7 +2,7 @@ import React, {
   useState, useCallback, useImperativeHandle, forwardRef, useRef,
 } from 'react';
 import {
-  Button, Drawer, message, Image,
+  Button, Drawer, message, Image, Modal,
 } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import {
@@ -10,7 +10,8 @@ import {
 } from 'table-render';
 import FormRender, { useForm } from 'form-render';
 
-import filterSearchForm from '@/utils/filterSearchForm';
+import filterSearchForm from '../../../utils/filterSearchForm';
+import filterDrawerForm from '../../../utils/filterDrawerForm';
 import schema from './schema.json';
 import bannerApi from '../../../api/operator/banner';
 
@@ -82,7 +83,7 @@ const TableBody = forwardRef((props, ref) => {
       render: (row) => (
         <div>
           <Button type="link" onClick={() => props.editCurrentData(row)}>编辑</Button>
-          <Button type="link">下架</Button>
+          { row.status === 2 && <Button type="link" onClick={() => props.offlineCurrentData(row)}>下架</Button> }
         </div>
       ),
     },
@@ -96,7 +97,7 @@ const TableBody = forwardRef((props, ref) => {
     <div>
       <Search
         schema={{
-          ...filterSearchForm(props.schema, 'banner_name', 'status'),
+          ...filterSearchForm(props.schema, 'banner_id', 'banner_name', 'status'),
           column: 4,
         }}
         api={searchApi}
@@ -105,14 +106,14 @@ const TableBody = forwardRef((props, ref) => {
       <Table
         headerTitle="轮播图管理"
         columns={columns}
-        rowKey="product_category_id"
+        rowKey="banner_id"
         toolbarRender={toolbarRender}
       />
     </div>
   );
 });
 
-const Product = () => {
+const Banner = () => {
   const tableRef = useRef();
   // state
   const [showDrawer, setShowDrawer] = useState(false);
@@ -120,11 +121,32 @@ const Product = () => {
 
   const form = useForm();
 
-  const editCurrentData = useCallback((data) => {
-    setCurrentData(data);
-    setShowDrawer(true);
-    form?.setValues(data);
-  }, [setCurrentData]);
+  const editCurrentData = async ({ banner_id }) => {
+    const [, res] = await bannerApi.edit({ banner_id });
+    if (res) {
+      const data = res.result;
+      if (data.start_date && data.end_date) {
+        data.range_date = [data.start_date, data.end_date];
+      }
+      setCurrentData(data);
+      setShowDrawer(true);
+      form?.setValues(data);
+    }
+  };
+
+  const offlineCurrentData = useCallback(({ banner_id }) => {
+    Modal.confirm({
+      title: '下架轮播图',
+      content: '下架轮播图后，该轮播图将不再展示。确定下架轮播图？',
+      onOk: async () => {
+        const [, res] = await bannerApi.offline({ banner_id });
+        if (res) {
+          message.success('下架成功！');
+          tableRef.current?.refresh();
+        }
+      },
+    });
+  });
 
   const createRequest = async (values) => {
     const [, res] = await bannerApi.create(values);
@@ -171,6 +193,7 @@ const Product = () => {
           createItem={createItem}
           editCurrentData={editCurrentData}
           schema={schema}
+          offlineCurrentData={offlineCurrentData}
         />
       </TableProvider>
       <Drawer
@@ -187,7 +210,9 @@ const Product = () => {
       >
         <FormRender
           form={form}
-          schema={schema}
+          schema={filterDrawerForm(schema, [
+            'banner_name', 'image', 'type', 'relation_id', 'range_date', 'sort', 'comment',
+          ], 'banner_id')}
           data={currentData}
           onFinish={handleSubmit}
           widgets={{
@@ -200,4 +225,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default Banner;

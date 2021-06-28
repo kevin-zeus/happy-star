@@ -13,7 +13,7 @@ function getUid() {
 }
 
 function value2FileList(value = '') {
-  if (!value) {
+  if (!value || Array.isArray(value)) {
     return [];
   }
   return value.split(',').map((url) => ({
@@ -30,13 +30,6 @@ function trimArr(value = []) {
   }
   return value.filter((item) => item);
 }
-
-// function fileList2Value(fileList) {
-//   if (fileList.length === 0) {
-//     return '';
-//   }
-//   return fileList.map((item) => item.url).join(',');
-// }
 
 export default function ImageUpload({
   action,

@@ -1,0 +1,62 @@
+{
+  "type": "object",
+  "properties": {
+    "content_id": {
+      "title": "ID",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+      },
+      "type": "string"
+    },
+    "name": {
+      "title": "图文详情名称",
+      "required": true,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+      },
+      "type": "string"
+    },
+    "content": {
+      "title": "详情内容",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+      },
+      "type": "string",
+      "widget": "editor"
+    },
+    "status": {
+      "title": "状态",
+      "required": true,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "enum": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "enumNames": [
+        "待上架",
+        "上架中",
+        "已下架",
+        "已过期"
+      ],
+      "props": {
+        "allowClear": true,
+        "placeholder": "全部"
+      },
+      "type": "number",
+      "widget": "select"
+    }
+  },
+  "showDescIcon": true
+}

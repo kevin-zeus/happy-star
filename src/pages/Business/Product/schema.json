@@ -1,6 +1,15 @@
 {
   "type": "object",
   "properties": {
+    "product_id": {
+      "title": "ID",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {},
+      "type": "string"
+    },
     "product_name": {
       "title": "商品名称",
       "required": false,
@@ -64,23 +73,38 @@
       "widget": "select"
     },
     "product_category_id": {
-      "title": "商品分类",
+      "title": "一级分类",
       "required": false,
       "disabled": false,
       "readOnly": false,
       "hidden": false,
-      "enum": [],
       "props": {
         "allowClear": true,
-        "placeholder": "全部"
+        "placeholder": "请选择"
       },
-      "enumNames": [],
       "type": "string",
-      "widget": "select"
+      "widget": "category1"
+    },
+    "second_category_id": {
+      "title": "二级分类",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+        "allowClear": true,
+        "placeholder": "请选择"
+      },
+      "type": "string",
+      "widget": "category2"
     },
     "rule": {
       "title": "返利规则",
       "type": "array",
+      "widget": "list2",
+      "props": {
+        "hideAdd": true
+      },
       "items": {
         "type": "object",
         "properties": {
@@ -106,7 +130,7 @@
             "disabled": false,
             "readOnly": false,
             "hidden": false,
-            "type": "number"
+            "type": "string"
           },
           "rebate": {
             "title": "返利金额",
@@ -114,7 +138,7 @@
             "disabled": false,
             "readOnly": false,
             "hidden": false,
-            "type": "number"
+            "type": "string"
           }
         }
       }

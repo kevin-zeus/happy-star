@@ -1,0 +1,49 @@
+{
+  "type": "object",
+  "properties": {
+    "earning_log_id": {
+      "title": "流水号",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+      },
+      "type": "string"
+    },
+    "type": {
+      "title": "交易类型",
+      "required": true,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "enum": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "enumNames": [
+        "用户充值",
+        "参与任务",
+        "发起任务",
+        "退回任务款",
+        "抢单返利",
+        "签到奖励",
+        "邀请注册奖励",
+        "邀请首充奖励"
+      ],
+      "props": {
+        "allowClear": true,
+        "placeholder": "全部"
+      },
+      "type": "number",
+      "widget": "select"
+    }
+  },
+  "showDescIcon": true
+}

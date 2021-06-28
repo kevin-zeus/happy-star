@@ -1,0 +1,37 @@
+{
+  "type": "object",
+  "properties": {
+    "department_id": {
+      "title": "ID",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+      },
+      "type": "string"
+    },
+    "department_name": {
+      "title": "部门名称",
+      "required": true,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+      },
+      "type": "string"
+    },
+    "department": {
+      "title": "上级部门",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+      },
+      "type": "string",
+      "widget": "depart"
+    }
+  },
+  "showDescIcon": true
+}

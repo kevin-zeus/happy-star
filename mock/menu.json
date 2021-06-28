@@ -77,32 +77,32 @@
         "name": "内容管理",
         "childRoutes": [
           {
-            "path": "/operator/banner",
+            "path": "/operator/content/banner",
             "name": "轮播图管理",
             "icon": ""
           },
           {
-            "path": "/operator/richtext",
+            "path": "/operator/content/richtext",
             "name": "图文详情配置",
             "icon": ""
           },
           {
-            "path": "/operator/comment",
+            "path": "/operator/content/comment",
             "name": "评论审核",
             "icon": ""
           },
           {
-            "path": "/operator/dynamic",
+            "path": "/operator/content/dynamic",
             "name": "动态审核",
             "icon": ""
           },
           {
-            "path": "/operator/dynamic-config",
+            "path": "/operator/content/dynamic-config",
             "name": "动态数据",
             "icon": ""
           },
           {
-            "path": "/operator/task-config",
+            "path": "/operator/content/task-config",
             "name": "抢单任务清单",
             "icon": ""
           }
@@ -122,25 +122,25 @@
         "icon": "",
         "childRoutes": [
           {
-            "path": "/financial/withdrawal",
+            "path": "/financial/work/withdrawal",
             "name": "提现审核",
             "icon": ""
           },
           {
-            "path": "/financial/withdrawal-pay",
+            "path": "/financial/work/withdrawal-pay",
             "name": "提现打款",
             "icon": ""
           },
           {
-            "path": "/financial/recharge",
+            "path": "/financial/work/recharge",
             "name": "人工转账审核",
             "icon": ""
           }
         ]
       },
       {
-        "path": "/financial/earging",
-        "name": "财务管理",
+        "path": "/financial/earning",
+        "name": "账户管理",
         "icon": ""
       },
       {
@@ -149,12 +149,12 @@
         "icon": "",
         "childRoutes": [
           {
-            "path": "/financial/report-day",
+            "path": "/financial/count/report-day",
             "name": "财务日报表",
             "icon": ""
           },
           {
-            "path": "/financial/report",
+            "path": "/financial/count/report",
             "name": "财务业绩报表",
             "icon": ""
           }
@@ -174,22 +174,22 @@
         "icon": "",
         "childRoutes": [
           {
-            "path": "/system/dynamic",
+            "path": "/system/base/dynamic",
             "name": "最新动态",
             "icon": ""
           },
           {
-            "path": "/system/server",
+            "path": "/system/base/server",
             "name": "客服账号",
             "icon": ""
           },
           {
-            "path": "/system/sign",
+            "path": "/system/base/sign",
             "name": "签到奖励",
             "icon": ""
           },
           {
-            "path": "/system/invite",
+            "path": "/system/base/invite",
             "name": "邀请奖励",
             "icon": ""
           }
@@ -201,17 +201,17 @@
         "icon": "",
         "childRoutes": [
           {
-            "path": "/system/admin",
+            "path": "/system/account/admin",
             "name": "账号管理",
             "icon": ""
           },
           {
-            "path": "/system/department",
+            "path": "/system/account/department",
             "name": "部门管理",
             "icon": ""
           },
           {
-            "path": "/system/role",
+            "path": "/system/account/role",
             "name": "角色管理",
             "icon": ""
           }

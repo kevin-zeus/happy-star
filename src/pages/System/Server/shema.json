@@ -1,0 +1,92 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "title": "客服姓名",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+      },
+      "type": "string"
+    },
+    "type": {
+      "title": "客服类型",
+      "required": true,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "enum": [
+        1,
+        2
+      ],
+      "enumNames": [
+        "平台客服",
+        "专属客服"
+      ],
+      "type": "number"
+    },
+    "d": {
+      "title": "一级部门",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+      },
+      "enum": [],
+      "enumNames": [],
+      "type": "number",
+      "widget": "select"
+    },
+    "d2": {
+      "title": "二级部门",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+      },
+      "enum": [],
+      "enumNames": [],
+      "type": "string",
+      "widget": "select"
+    },
+    "d3": {
+      "title": "三级部门",
+      "required": false,
+      "disabled": false,
+      "readOnly": false,
+      "hidden": false,
+      "props": {
+      },
+      "enum": [],
+      "enumNames": [],
+      "type": "string",
+      "widget": "select"
+    },
+    "account": {
+      "title": "社交平台账号",
+      "type": "array",
+      "widget": "list2",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "名称",
+            "type": "string",
+            "props": {}
+          },
+          "account": {
+            "title": "账号",
+            "type": "string",
+            "props": {}
+          }
+        }
+      },
+      "props": {}
+    }
+  },
+  "showDescIcon": true
+}
